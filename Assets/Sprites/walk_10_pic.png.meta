@@ -1,0 +1,207 @@
+fileFormatVersion: 2
+guid: 708b3a87077a9e149a0d70d0aec3775f
+timeCreated: 1480942473
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: walk_10_pic_1
+    21300002: walk_10_pic_2
+    21300004: walk_10_pic_3
+    21300006: walk_10_pic_4
+    21300008: walk_10_pic_5
+    21300010: walk_10_pic_6
+    21300012: walk_10_pic_7
+    21300014: walk_10_pic_8
+    21300016: walk_10_pic_9
+    21300018: walk_10_pic_10
+    21300020: walk_10_pic_11
+    21300022: walk_10_pic_13
+    21300024: walk_10_pic_14
+    21300026: walk_10_pic_15
+    21300028: walk_10_pic_16
+    21300030: walk_10_pic_17
+    21300032: walk_10_pic_18
+    21300034: walk_10_pic_19
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: walk_10_pic_4
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 270
+        width: 138
+        height: 225
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walk_10_pic_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 254
+        width: 121
+        height: 241
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walk_10_pic_7
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 282
+        width: 184
+        height: 213
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walk_10_pic_8
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 253
+        width: 120
+        height: 241
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 1, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walk_10_pic_9
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 252
+        width: 112
+        height: 243
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walk_10_pic_15
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0
+        width: 120
+        height: 253
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walk_10_pic_16
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 3
+        width: 133
+        height: 250
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walk_10_pic_17
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 29
+        width: 167
+        height: 224
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walk_10_pic_18
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 3
+        width: 107
+        height: 248
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walk_10_pic_19
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 12
+        width: 127
+        height: 257
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
