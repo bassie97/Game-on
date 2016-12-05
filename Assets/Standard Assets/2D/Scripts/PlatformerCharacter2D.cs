@@ -9,6 +9,7 @@ namespace UnityStandardAssets._2D
         [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
+		[SerializeField] private int score = 0;
 
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
@@ -92,5 +93,11 @@ namespace UnityStandardAssets._2D
             theScale.x *= -1;
             transform.localScale = theScale;
         }
+		void OnTrigger(Collider2D pickup){
+			if(pickup.gameObject.CompareTag("PickUp")){
+				score = score + 100;
+				Destroy(pickup.gameObject);
+			}
     }
-}
+				}
+				}
