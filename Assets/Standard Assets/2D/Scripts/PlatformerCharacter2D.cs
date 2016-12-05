@@ -93,11 +93,6 @@ namespace UnityStandardAssets._2D
             theScale.x *= -1;
             transform.localScale = theScale;
         }
-		void OnTrigger(Collider2D pickup){
-			if(pickup.gameObject.CompareTag("PickUp")){
-				score = score + 100;
-				Destroy(pickup.gameObject);
-			}
-    }
-				}
-				}
+
+}
+}
