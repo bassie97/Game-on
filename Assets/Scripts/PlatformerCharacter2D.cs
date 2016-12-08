@@ -10,6 +10,7 @@ namespace UnityStandardAssets._2D
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
 		[SerializeField] private int score = 0;
+		[SerializeField] private GameObject ammoPrefab;
 
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
@@ -17,10 +18,12 @@ namespace UnityStandardAssets._2D
         private Animator m_Anim;            // Reference to the player's animator component.
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+		private Transform firePoint;
 
         private void Awake()
         {
             // Setting up references.
+			firePoint = transform.Find("FirePoint");
             m_GroundCheck = transform.Find("GroundCheck");
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -32,6 +35,10 @@ namespace UnityStandardAssets._2D
 			}
 		}
 		private void Update(){
+			if(Input.GetKeyDown(KeyCode.E))
+			{
+				throwAmmo();
+			}
 		}
         private void FixedUpdate()
         {
@@ -99,6 +106,14 @@ namespace UnityStandardAssets._2D
             theScale.x *= -1;
             transform.localScale = theScale;
         }
-
+		void throwAmmo(){
+			if (m_FacingRight) {
+				GameObject tmp = (GameObject)Instantiate (ammoPrefab, firePoint.position, Quaternion.Euler(-firePoint.position.x, -firePoint.position.y, -60));
+				tmp.GetComponent<Ammo> ().Initialize (firePoint.right);
+			} else {
+				GameObject tmp = (GameObject)Instantiate (ammoPrefab, firePoint.position, Quaternion.Euler(firePoint.position.x, firePoint.position.y, 60));
+				tmp.GetComponent<Ammo> ().Initialize (-firePoint.right);
+			}
+		}
 }
 }
