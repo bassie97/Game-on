@@ -51,8 +51,6 @@ public class Camera2DFollow : MonoBehaviour {
 		newPos = new Vector3 (newPos.x, Mathf.Clamp (newPos.y, yPosRestriction, Mathf.Infinity), -1);
 
 		transform.position = newPos;
-        Debug.Log(target.position + "and " + target1.position);
-        Debug.Log(newPos);
 		
 		lastTargetPosition = ((target.position + target1.position) / 2);		
 	}

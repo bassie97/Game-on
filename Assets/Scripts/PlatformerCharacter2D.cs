@@ -20,6 +20,11 @@ namespace UnityStandardAssets._2D
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 		private Transform firePoint;
 
+        public bool onLaddder;
+        public float climbSpeed;
+        private float climbVelocity;
+        private float gravityStore;
+
         private void Awake()
         {
             // Setting up references.
@@ -27,6 +32,7 @@ namespace UnityStandardAssets._2D
             m_GroundCheck = transform.Find("GroundCheck");
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
+            gravityStore = m_Rigidbody2D.gravityScale;
         }
 		private void OnTriggerEnter2D(Collider2D other){
 			if(other.CompareTag("PickUp")){
@@ -39,6 +45,21 @@ namespace UnityStandardAssets._2D
 			{
 				throwAmmo();
 			}
+
+            if(onLaddder)
+            {
+                m_Rigidbody2D.gravityScale = 0f;
+
+                climbVelocity = climbSpeed * Input.GetAxisRaw("P0_Vertical");
+
+                m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, climbVelocity);
+
+            }
+
+            if(!onLaddder)
+            {
+                m_Rigidbody2D.gravityScale = gravityStore;
+            }
 		}
         private void FixedUpdate()
         {
@@ -52,7 +73,6 @@ namespace UnityStandardAssets._2D
                 if (colliders[i].gameObject != gameObject)
                     m_Grounded = true;
             }
-            Debug.Log(m_Grounded);
             m_Anim.SetBool("Ground", m_Grounded);
 
             // Set the vertical animation
@@ -87,7 +107,6 @@ namespace UnityStandardAssets._2D
                 }
             }
             // If the player should jump...
-            Debug.Log("Jump " + jump + "grounded " + m_Grounded + "anim.getbool " + m_Anim.GetBool("Ground"));
             if (m_Grounded && jump && m_Anim.GetBool("Ground"))
             {
                 
