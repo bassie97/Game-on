@@ -19,6 +19,8 @@ namespace UnityStandardAssets._2D
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 		private Transform firePoint;
+        private int fireRate = 10;
+        private float timeToFire = 0;
 
         private void Awake()
         {
@@ -35,11 +37,22 @@ namespace UnityStandardAssets._2D
 			}
 		}
 		private void Update(){
-			if(Input.GetKeyDown(KeyCode.E))
-			{
-				throwAmmo();
-			}
-		}
+            if (fireRate == 0)
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    throwAmmo();
+                }
+            }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.E) && Time.time > timeToFire)
+                {
+                    timeToFire = Time.time + 1 / fireRate;
+                    throwAmmo();
+                }
+            }
+        }
         private void FixedUpdate()
         {
             m_Grounded = false;
