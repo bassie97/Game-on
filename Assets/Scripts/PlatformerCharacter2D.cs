@@ -20,6 +20,8 @@ namespace UnityStandardAssets._2D
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 		private Transform firePoint;
+        private int fireRate = 10;
+        private float timeToFire = 0;
 
         public bool onLaddder;
         public float climbSpeed;
@@ -65,7 +67,24 @@ namespace UnityStandardAssets._2D
             {
                 m_Rigidbody2D.gravityScale = gravityStore;
             }
-		}
+
+            if (fireRate == 0)
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    throwAmmo();
+                }
+            }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.E) && Time.time > timeToFire)
+                {
+                    timeToFire = Time.time + 1 / fireRate;
+                    throwAmmo();
+                }
+            }
+        }
+
         private void FixedUpdate()
         {
             m_Grounded = false;
@@ -142,6 +161,7 @@ namespace UnityStandardAssets._2D
             theScale.x *= -1;
             transform.localScale = theScale;
         }
+
 		void throwAmmo(){
 			if (m_FacingRight) {
 				GameObject tmp = (GameObject)Instantiate (ammoPrefab, firePoint.position, Quaternion.Euler(-firePoint.position.x, -firePoint.position.y, -60));
