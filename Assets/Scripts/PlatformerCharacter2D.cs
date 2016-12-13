@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace UnityStandardAssets._2D
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class PlatformerCharacter2D : MonoBehaviour
     {
         [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
@@ -25,6 +26,9 @@ namespace UnityStandardAssets._2D
         private float climbVelocity;
         private float gravityStore;
 
+        public int curHealth;
+        public int maxhealth = 5;
+
         private void Awake()
         {
             // Setting up references.
@@ -33,6 +37,7 @@ namespace UnityStandardAssets._2D
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
             gravityStore = m_Rigidbody2D.gravityScale;
+            curHealth = maxhealth;
         }
 		private void OnTriggerEnter2D(Collider2D other){
 			if(other.CompareTag("PickUp")){
@@ -77,6 +82,15 @@ namespace UnityStandardAssets._2D
 
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
+
+            if (curHealth > maxhealth)
+            {
+                curHealth = maxhealth;
+            }
+            if (curHealth <= 0)
+            {
+                Die();
+            }
         }
 
 
@@ -137,5 +151,10 @@ namespace UnityStandardAssets._2D
 				tmp.GetComponent<Ammo> ().Initialize (-firePoint.right);
 			}
 		}
+
+        void Die()
+        {
+            Application.LoadLevel(Application.loadedLevel);
+        }
 }
 }
