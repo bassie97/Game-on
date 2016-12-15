@@ -44,7 +44,7 @@ public class EnemyAI : MonoBehaviour {
         m_Anim.SetFloat("Speed", rb.velocity.y);
         if (target == null)
         {
-            Debug.LogError("NO player found");
+            //Debug.LogError("NO player found");
             return;
         }
         StartCoroutine(UpdatePath());
@@ -55,7 +55,7 @@ public class EnemyAI : MonoBehaviour {
         if(target == null)
         {
             //TODO: Insert a playersearch
-            Debug.LogError("Target(player) not found.");
+            //Debug.LogError("Target(player) not found.");
             yield break;
         }
         seeker.StartPath(transform.position, target.position, OnPathComplete);
@@ -77,7 +77,7 @@ public class EnemyAI : MonoBehaviour {
     }
     public void OnPathComplete(Path p)
     {
-        Debug.Log("We got a path, did it have an error?"+ p.error);
+        //Debug.Log("We got a path, did it have an error?"+ p.error);
         if (!p.error)
         {
             path = p;
@@ -106,7 +106,7 @@ public class EnemyAI : MonoBehaviour {
             if (pathIsEnded)
                 return;
             
-            Debug.Log("End of path reached.");
+           // Debug.Log("End of path reached.");
             pathIsEnded = true;
             return;
         }

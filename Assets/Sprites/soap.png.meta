@@ -1,11 +1,12 @@
 fileFormatVersion: 2
-guid: 3bc58299e6061ff4caca57e3d6e7bdac
-timeCreated: 1481661581
+guid: d4124f2a4fcf5ed41baea8b46cc6fa27
+timeCreated: 1481742801
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: climbing_animation_0
-    21300002: climbing_animation_1
+    21300000: soap_0
+    21300002: soap_1
+    21300004: soap_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -31,7 +32,7 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: -1
+    filterMode: 0
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -43,43 +44,51 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.11442064, y: 0.55060726}
-  spriteBorder: {x: 0, y: 8, z: 289, w: 0}
-  spritePixelsToUnits: 150
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
-  buildTargetSettings:
-  - buildTarget: Standalone
-    maxTextureSize: 2048
-    textureFormat: -1
-    compressionQuality: 50
-    allowsAlphaSplitting: 0
+  buildTargetSettings: []
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: climbing_animation_0
+      name: soap_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 7
-        width: 98
-        height: 248
+        x: 0
+        y: 162
+        width: 111
+        height: 94
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: climbing_animation_1
+      name: soap_1
       rect:
         serializedVersion: 2
-        x: 221
-        y: 7
-        width: 101
-        height: 249
+        x: 111
+        y: 162
+        width: 111
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: soap_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 36
+        width: 111
+        height: 94
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

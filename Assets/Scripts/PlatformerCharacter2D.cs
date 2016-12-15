@@ -23,8 +23,8 @@ namespace UnityStandardAssets._2D
         private int fireRate = 10;
         private float timeToFire = 0;
 
-        public bool onLaddder;
-        public float climbSpeed;
+        public bool onLadder;
+        public float climbSpeed = 5;
         private float climbVelocity;
         private float gravityStore;
 
@@ -48,24 +48,29 @@ namespace UnityStandardAssets._2D
 			}
 		}
 		private void Update(){
-			if(Input.GetKeyDown(KeyCode.E))
-			{
-				throwAmmo();
-			}
 
-            if(onLaddder)
+            if(onLadder)
             {
                 m_Rigidbody2D.gravityScale = 0f;
 
                 climbVelocity = climbSpeed * Input.GetAxisRaw("P0_Vertical");
+                if (climbVelocity > 0)
+                {
+                    m_Anim.SetBool("onLadder", onLadder);
+                }
+                else
+                {
+                    m_Anim.SetBool("onLadder", !onLadder);
+                }
 
                 m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, climbVelocity);
 
             }
 
-            if(!onLaddder)
+            if(!onLadder)
             {
                 m_Rigidbody2D.gravityScale = gravityStore;
+                
             }
 
             if (fireRate == 0)
@@ -139,6 +144,7 @@ namespace UnityStandardAssets._2D
                     Flip();
                 }
             }
+
             // If the player should jump...
             if (m_Grounded && jump && m_Anim.GetBool("Ground"))
             {
@@ -162,19 +168,23 @@ namespace UnityStandardAssets._2D
             transform.localScale = theScale;
         }
 
-		void throwAmmo(){
-			if (m_FacingRight) {
-				GameObject tmp = (GameObject)Instantiate (ammoPrefab, firePoint.position, Quaternion.Euler(-firePoint.position.x, -firePoint.position.y, -60));
-				tmp.GetComponent<Ammo> ().Initialize (firePoint.right);
-			} else {
-				GameObject tmp = (GameObject)Instantiate (ammoPrefab, firePoint.position, Quaternion.Euler(firePoint.position.x, firePoint.position.y, 60));
-				tmp.GetComponent<Ammo> ().Initialize (-firePoint.right);
-			}
-		}
+        void throwAmmo()
+        {
+            if (m_FacingRight)
+            {
+                GameObject tmp = (GameObject)Instantiate(ammoPrefab, firePoint.position, Quaternion.Euler(-firePoint.position.x, -firePoint.position.y, -60));
+                tmp.GetComponent<Ammo>().Initialize(firePoint.right);
+            }
+            else
+            {
+                GameObject tmp = (GameObject)Instantiate(ammoPrefab, firePoint.position, Quaternion.Euler(firePoint.position.x, firePoint.position.y, 60));
+                tmp.GetComponent<Ammo>().Initialize(-firePoint.right);
+            }
+        }
 
-        void Die()
+    void Die()
         {
             Application.LoadLevel(Application.loadedLevel);
         }
-}
+    }
 }
