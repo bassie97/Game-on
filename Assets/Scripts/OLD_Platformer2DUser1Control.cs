@@ -5,7 +5,7 @@ using UnityStandardAssets.CrossPlatformInput;
 namespace UnityStandardAssets._2D
 {
     [RequireComponent(typeof(PlatformerCharacter2D))]
-    public class Platformer2DUser1Control : MonoBehaviour
+    public class OLD_Platformer2DUser1Control : MonoBehaviour
     {
         private PlatformerCharacter2D m_Character;
         private bool m_Jump;
@@ -23,7 +23,6 @@ namespace UnityStandardAssets._2D
             {
                 // Read the jump input in Update so button presses aren't missed.
                 m_Jump = CrossPlatformInputManager.GetButtonDown("P1_Jump");
-                Debug.Log(m_Jump);
             }
         }
 
@@ -31,7 +30,6 @@ namespace UnityStandardAssets._2D
         private void FixedUpdate()
         {
             // Read the inputs.
-            bool crouch = Input.GetKey(KeyCode.LeftControl);
             float h = CrossPlatformInputManager.GetAxis("P1_Horizontal");
             // Pass all parameters to the character control script.
             m_Character.Move(h, m_Jump);
