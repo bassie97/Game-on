@@ -18,12 +18,12 @@ namespace UnityStandardAssets._2D
 
         void Start()
         {
-            if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlatformerCharacter2D>() != null)
+            if (GameObject.FindGameObjectWithTag("Player") != null)
             {
                 playerOne = GameObject.FindGameObjectWithTag("Player").GetComponent<PlatformerCharacter2D>();
             }
 
-            if (GameObject.FindGameObjectWithTag("Player1").GetComponent<PlatformerCharacter2D>() != null)
+            if (GameObject.FindGameObjectWithTag("Player1") != null)
             {
                 playerTwo = GameObject.FindGameObjectWithTag("Player1").GetComponent<PlatformerCharacter2D>();
             }
@@ -33,22 +33,28 @@ namespace UnityStandardAssets._2D
         private void Update()
         {
 
-            if (!p0_jump && !playerOne.onLadder)
+            if (playerOne != null)
             {
-                // Read the jump input in Update so button presses aren't missed.
-                if (CrossPlatformInputManager.GetButtonDown("P0_Jump"))
+                if (!p0_jump && !playerOne.onLadder)
                 {
-                    Debug.Log("P0_jump");
-                    p0_jump = CrossPlatformInputManager.GetButtonDown("P0_Jump");
+                    // Read the jump input in Update so button presses aren't missed.
+                    if (CrossPlatformInputManager.GetButtonDown("P0_Jump"))
+                    {
+                        Debug.Log("P0_jump");
+                        p0_jump = CrossPlatformInputManager.GetButtonDown("P0_Jump");
+                    }
                 }
             }
 
-            if (!p1_jump && !playerTwo.onLadder)
+            if (playerTwo != null)
             {
-                if (CrossPlatformInputManager.GetButtonDown("P1_Jump"))
+                if (!p1_jump && !playerTwo.onLadder)
                 {
-                    Debug.Log("p1 jump");
-                    p1_jump = CrossPlatformInputManager.GetButtonDown("P1_Jump");
+                    if (CrossPlatformInputManager.GetButtonDown("P1_Jump"))
+                    {
+                        Debug.Log("p1 jump");
+                        p1_jump = CrossPlatformInputManager.GetButtonDown("P1_Jump");
+                    }
                 }
             }
         }
@@ -61,7 +67,6 @@ namespace UnityStandardAssets._2D
             // Read the inputs and pass input to character controller.
             if (playerOne != null)
             {
-                Debug.Log("P0: " + p0_jump);
                 h = CrossPlatformInputManager.GetAxis("P0_Horizontal");
                 playerOne.Move(h, p0_jump);
                 
@@ -69,7 +74,6 @@ namespace UnityStandardAssets._2D
 
             if (playerTwo != null)
             {
-                Debug.Log("P1: " + p1_jump);
                 h = CrossPlatformInputManager.GetAxis("P1_Horizontal");
                 playerTwo.Move(h, p1_jump);
                 

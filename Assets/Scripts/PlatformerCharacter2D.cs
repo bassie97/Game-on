@@ -33,15 +33,41 @@ namespace UnityStandardAssets._2D
 
         private void Awake()
         {
+            
+        }
+
+        private void Start()
+        {
+            GameController.Instance.subscribeScriptToGameEventUpdates(this);
+
             // Setting up references.
-			firePoint = transform.Find("FirePoint");
+            firePoint = transform.Find("FirePoint");
             m_GroundCheck = transform.Find("GroundCheck");
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
             gravityStore = m_Rigidbody2D.gravityScale;
             curHealth = maxhealth;
         }
-		private void OnTriggerEnter2D(Collider2D other){
+
+        void OnDestroy()
+        {
+            Debug.Log(this);
+            GameController.Instance.deSubscribeScriptToGameEventUpdates(this);
+        }
+
+        //this method will be automatically called whenever the player passes an important event in the game;
+        void gameEventUpdated()
+        {
+            Debug.Log("Our method is called");
+            //if player finishes event 5, let something happennn
+            if (GameController.Instance.gameEventID == 2)
+            {
+                //do something
+                Debug.Log("Do a little dance");
+            }
+
+        }
+        private void OnTriggerEnter2D(Collider2D other){
 			if(other.CompareTag("PickUp")){
 				score = score + 5;
 				Destroy (other.gameObject);
@@ -53,6 +79,8 @@ namespace UnityStandardAssets._2D
             {
                 m_Rigidbody2D.gravityScale = 0f;
 
+
+                //FIXXXXXXXXXXXXXXXX VOOR ANDERE PLAYER
                 climbVelocity = climbSpeed * Input.GetAxisRaw("P0_Vertical");
                 if (climbVelocity > 0)
                 {
@@ -69,6 +97,7 @@ namespace UnityStandardAssets._2D
 
             if(!onLadder)
             {
+                m_Anim.SetBool("onLadder", false);
                 m_Rigidbody2D.gravityScale = gravityStore;
                 
             }
@@ -118,13 +147,12 @@ namespace UnityStandardAssets._2D
         }
 
 
-        public void Move(float move, bool jump)
+        public void Move(float move , bool jump)
         {
            
             //only control the player if grounded or airControl is turned on
             if (m_Grounded || m_AirControl)
             {
-
                 // The Speed animator parameter is set to the absolute value of the horizontal input.
                 m_Anim.SetFloat("Speed", Mathf.Abs(move));
 
