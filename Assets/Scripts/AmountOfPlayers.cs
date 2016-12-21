@@ -2,21 +2,23 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class GameManager : MonoBehaviour {
+public class AmountOfPlayers : MonoBehaviour {
 
-    private int AmountOfPlayers;
+    private int amount;
 
-    public int AmountOfPlayers1
+    public int amount1
     {
         get
         {
-            return AmountOfPlayers;
+            return amount;
         }
 
         set
         {
             Debug.Log("Player amount is set to: " + value);
-            AmountOfPlayers = value;
+            amount = value;
+            GameController.Instance.AmountOfPlayers = amount;
+            //go to next screen
             SceneManager.LoadScene(2);
         }
     }

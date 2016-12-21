@@ -10,11 +10,12 @@ namespace UnityStandardAssets._2D
         // Use this for initialization
         void Start()
         {
-            //m_Character = GetComponent<PlatformerCharacter2D>();
+            m_Character = GetComponent<PlatformerCharacter2D>();
         }
 
         void OnTriggerEnter2D(Collider2D collision)
         {
+            Debug.Log("enter");
             if (collision.tag == "Player" || collision.tag == "Player1")
             {
                 m_Character = collision.GetComponent<PlatformerCharacter2D>();
@@ -24,6 +25,7 @@ namespace UnityStandardAssets._2D
 
         void OnTriggerExit2D(Collider2D collision)
         {
+            Debug.Log("exit");
             if (collision.tag == "Player" || collision.tag == "Player1")
             {
                 m_Character = collision.GetComponent<PlatformerCharacter2D>();

@@ -20,22 +20,17 @@ public class Camera2DFollow : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-        Debug.Log("Start");
-		lastTargetPosition = (target.position + target1.position)/2;
+        FindPlayers();
+		lastTargetPosition = AveragePosition();
 		//offsetZ = (transform.position - ((target.position + target1.position) / 2)).z;
 		transform.parent = null;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-		if (target == null || target1 == null) {
-			FindPlayers ();
-			return;
-		}
-
-		// only update lookahead pos if accelerating or changed direction
-		float xMoveDelta = (((target.position + target1.position) / 2) - lastTargetPosition).x;
+        
+        // only update lookahead pos if accelerating or changed direction
+        float xMoveDelta = (AveragePosition() - lastTargetPosition).x;
 
 	    bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > lookAheadMoveThreshold;
 
@@ -45,14 +40,14 @@ public class Camera2DFollow : MonoBehaviour {
 			lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, Time.deltaTime * lookAheadReturnSpeed);	
 		}
 
-        Vector3 aheadTargetPos = ((target.position + target1.position) / 2) + lookAheadPos + Vector3.forward;// * offsetZ;
+        Vector3 aheadTargetPos = AveragePosition() + lookAheadPos + Vector3.forward;// * offsetZ;
 		Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
 
 		newPos = new Vector3 (newPos.x, Mathf.Clamp (newPos.y, yPosRestriction, Mathf.Infinity), -1);
 
 		transform.position = newPos;
 		
-		lastTargetPosition = ((target.position + target1.position) / 2);		
+		lastTargetPosition = AveragePosition();		
 	}
 
 	void FindPlayers () {
@@ -66,4 +61,20 @@ public class Camera2DFollow : MonoBehaviour {
             nextTimeToSearch = Time.time + 0.5f;
 		}
 	}
+
+    Vector3 AveragePosition()
+    {
+        if (target != null && target1 != null)
+        {
+            return (target.position + target1.position) / 2;
+        }
+        else if (target != null)
+        {
+            return target.position;
+        }
+        else
+        {
+            return target1.position;
+        }
+    }
 }
