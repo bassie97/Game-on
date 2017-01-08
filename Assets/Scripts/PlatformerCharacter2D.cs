@@ -6,7 +6,7 @@ namespace UnityStandardAssets._2D
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlatformerCharacter2D : MonoBehaviour
     {
-        [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
+        [SerializeField] private float m_MaxSpeed = 5f;                    // The fastest the player can travel in the x axis.
         [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
@@ -14,14 +14,13 @@ namespace UnityStandardAssets._2D
 		[SerializeField] private GameObject ammoPrefab;
 
         public int ammoCount = 10;
-
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
         private bool m_Grounded;            // Whether or not the player is grounded.
         private Animator m_Anim;            // Reference to the player's animator component.
         private Rigidbody2D m_Rigidbody2D;
-        private bool m_FacingRight = true;  // For determining which way the player is currently facing.
-		private Transform firePoint;
+        public bool m_FacingRight = true;  // For determining which way the player is currently facing.
+		public Transform firePoint;
         private int fireRate = 10;
         private float timeToFire = 0;
 
@@ -76,8 +75,15 @@ namespace UnityStandardAssets._2D
 			}
 		}
 		private void Update(){
-
-            if(onLadder)
+            if(m_Grounded == false)
+            {
+                Debug.Log("Do you even try?");
+                m_Rigidbody2D.gravityScale = 3f;
+            }else if(m_GroundCheck == false)
+            {
+                m_Rigidbody2D.gravityScale = gravityStore;
+            }
+            if (onLadder)
             {
                 m_Rigidbody2D.gravityScale = 0f;
 
@@ -100,10 +106,10 @@ namespace UnityStandardAssets._2D
             if(!onLadder)
             {
                 m_Anim.SetBool("onLadder", false);
-                m_Rigidbody2D.gravityScale = gravityStore;
+               // m_Rigidbody2D.gravityScale = gravityStore;
                 
             }
-
+            /* Will be removed at a later date
             if (fireRate == 0)
             {
                 if (Input.GetKeyDown(KeyCode.E))
@@ -118,7 +124,7 @@ namespace UnityStandardAssets._2D
                     timeToFire = Time.time + 1 / fireRate;
                     throwAmmo();
                 }
-            }
+            }*/
         }
 
         private void FixedUpdate()
@@ -198,6 +204,7 @@ namespace UnityStandardAssets._2D
             transform.localScale = theScale;
         }
 
+        /*
         void throwAmmo()
         {
             ammoCount--;
@@ -212,7 +219,7 @@ namespace UnityStandardAssets._2D
                 tmp.GetComponent<Ammo>().Initialize(-firePoint.right);
             }
         }
-
+        */
     void Die()
         {
             Application.LoadLevel(Application.loadedLevel);
