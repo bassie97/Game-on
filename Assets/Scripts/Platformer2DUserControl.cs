@@ -41,6 +41,7 @@ namespace UnityStandardAssets._2D
 
             if (playerOne != null)
             {
+
                 if (!p0_jump && !playerOne.onLadder)
                 {
                     // Read the jump input in Update so button presses aren't missed.
