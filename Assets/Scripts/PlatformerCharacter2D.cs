@@ -13,6 +13,8 @@ namespace UnityStandardAssets._2D
 		[SerializeField] private int score = 0;
 		[SerializeField] private GameObject ammoPrefab;
 
+        public int ammoCount = 10;
+
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
         private bool m_Grounded;            // Whether or not the player is grounded.
@@ -198,6 +200,7 @@ namespace UnityStandardAssets._2D
 
         void throwAmmo()
         {
+            ammoCount--;
             if (m_FacingRight)
             {
                 GameObject tmp = (GameObject)Instantiate(ammoPrefab, firePoint.position, Quaternion.Euler(-firePoint.position.x, -firePoint.position.y, -60));

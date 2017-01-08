@@ -12,8 +12,8 @@ namespace UnityStandardAssets._2D
         private bool p1_jump;
 
         //The CharacterControllers
-        PlatformerCharacter2D playerOne;
-        PlatformerCharacter2D playerTwo;
+        public PlatformerCharacter2D playerOne;
+        public PlatformerCharacter2D playerTwo;
 
 
         void Start()

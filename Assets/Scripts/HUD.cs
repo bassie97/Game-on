@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
     public Sprite[] HeartSprites;
-    public Image HeartUI;
+    private Image HeartUI;
     private UnityStandardAssets._2D.PlatformerCharacter2D player;
 
     void Start()
