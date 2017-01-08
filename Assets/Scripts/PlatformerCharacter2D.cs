@@ -13,13 +13,14 @@ namespace UnityStandardAssets._2D
 		[SerializeField] private int score = 0;
 		[SerializeField] private GameObject ammoPrefab;
 
+        public int ammoCount = 10;
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
         private bool m_Grounded;            // Whether or not the player is grounded.
         private Animator m_Anim;            // Reference to the player's animator component.
         private Rigidbody2D m_Rigidbody2D;
-        private bool m_FacingRight = true;  // For determining which way the player is currently facing.
-		private Transform firePoint;
+        public bool m_FacingRight = true;  // For determining which way the player is currently facing.
+		public Transform firePoint;
         private int fireRate = 10;
         private float timeToFire = 0;
 
@@ -101,7 +102,7 @@ namespace UnityStandardAssets._2D
                 m_Rigidbody2D.gravityScale = gravityStore;
                 
             }
-
+            /* Will be removed at a later date
             if (fireRate == 0)
             {
                 if (Input.GetKeyDown(KeyCode.E))
@@ -116,7 +117,7 @@ namespace UnityStandardAssets._2D
                     timeToFire = Time.time + 1 / fireRate;
                     throwAmmo();
                 }
-            }
+            }*/
         }
 
         private void FixedUpdate()
@@ -196,6 +197,7 @@ namespace UnityStandardAssets._2D
             transform.localScale = theScale;
         }
 
+        /*
         void throwAmmo()
         {
             if (m_FacingRight)
@@ -209,7 +211,7 @@ namespace UnityStandardAssets._2D
                 tmp.GetComponent<Ammo>().Initialize(-firePoint.right);
             }
         }
-
+        */
     void Die()
         {
             Application.LoadLevel(Application.loadedLevel);

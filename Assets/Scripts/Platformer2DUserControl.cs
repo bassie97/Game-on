@@ -7,9 +7,14 @@ namespace UnityStandardAssets._2D
     [RequireComponent(typeof (PlatformerCharacter2D))]
     public class Platformer2DUserControl : MonoBehaviour
     {
-        private PlatformerCharacter2D m_Character;
         private bool p0_jump;
         private bool p1_jump;
+
+        //Variables for the ammo firing
+        [SerializeField] private GameObject ammoPrefab;
+        // private Transform firePoint;
+        private int fireRate = 0;
+        private float timeToFire = 0;
 
         //The CharacterControllers
         PlatformerCharacter2D playerOne;
@@ -18,6 +23,7 @@ namespace UnityStandardAssets._2D
 
         void Start()
         {
+           // firePoint = transform.Find("FirePoint");
             if (GameObject.FindGameObjectWithTag("Player") != null)
             {
                 playerOne = GameObject.FindGameObjectWithTag("Player").GetComponent<PlatformerCharacter2D>();
@@ -57,8 +63,43 @@ namespace UnityStandardAssets._2D
                     }
                 }
             }
+            if (fireRate == 0)
+            {
+                if (Input.GetKeyDown(KeyCode.E) && this.CompareTag("Player") && playerOne.ammoCount > 0)
+                {
+                    Debug.Log("Are you triggered?");
+                    throwAmmo(playerOne);
+                    playerOne.ammoCount--;
+                }
+                if (Input.GetKeyDown(KeyCode.RightControl) && this.CompareTag("Player1") && playerTwo.ammoCount > 0)
+                {
+                    throwAmmo(playerTwo);
+                    playerTwo.ammoCount--;
+                }
+            }
+            else
+            {
+                /*   if (Input.GetKeyDown(KeyCode.E) && Time.time > timeToFire)
+                   {
+                       timeToFire = Time.time + 1 / fireRate;
+                       throwAmmo();
+                   }
+               }*/
+            }
         }
-
+        void throwAmmo(PlatformerCharacter2D player)
+        {
+            if (player.m_FacingRight)
+            {
+                GameObject tmp = (GameObject)Instantiate(ammoPrefab, player.firePoint.position, Quaternion.Euler(-player.firePoint.position.x, -player.firePoint.position.y, -60));
+                tmp.GetComponent<Ammo>().Initialize(player.firePoint.right);
+            }
+            else
+            {
+                GameObject tmp = (GameObject)Instantiate(ammoPrefab, player.firePoint.position, Quaternion.Euler(player.firePoint.position.x, player.firePoint.position.y, 60));
+                tmp.GetComponent<Ammo>().Initialize(-player.firePoint.right);
+            }
+        }
 
         private void FixedUpdate()
         {
