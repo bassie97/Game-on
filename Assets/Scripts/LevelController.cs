@@ -8,6 +8,9 @@ using System.Collections;
 */
 public class LevelController : MonoBehaviour {
 
+    public GameObject OnePlayerHUD;
+    public GameObject TwoPlayerHUD;
+
     private void Awake()
     {
         GameController.Instance.subscribeScriptToGameEventUpdates(this);
@@ -36,7 +39,16 @@ public class LevelController : MonoBehaviour {
             //Spawn player or players
 
             //Initialize HUD
-
+            GameObject parent = GameObject.FindGameObjectWithTag("ChooseCharacter");
+            if (GameController.Instance.AmountOfPlayers == 1)
+            {
+                GameObject prefab = (GameObject)Instantiate(OnePlayerHUD, new Vector3(0, 0, 0), Quaternion.identity);
+                //prefab.transform.SetParent(canvas.transform, false);
+            }
+            if(GameController.Instance.AmountOfPlayers == 2)
+            {
+                GameObject prefab = (GameObject)Instantiate(TwoPlayerHUD, new Vector3(0, 0, 0), Quaternion.identity);
+            }
         }
 
     }
