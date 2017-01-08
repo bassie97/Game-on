@@ -72,6 +72,7 @@ public class Camera2DFollow : MonoBehaviour {
         {
             return target.position;
         }
+
         else
         {
             return target1.position;

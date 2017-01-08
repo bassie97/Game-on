@@ -207,6 +207,7 @@ namespace UnityStandardAssets._2D
         /*
         void throwAmmo()
         {
+            ammoCount--;
             if (m_FacingRight)
             {
                 GameObject tmp = (GameObject)Instantiate(ammoPrefab, firePoint.position, Quaternion.Euler(-firePoint.position.x, -firePoint.position.y, -60));
