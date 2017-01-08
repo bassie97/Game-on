@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour {
     private static GameController instance;
 
     public int AmountOfPlayers;
-    public string Name;
+    public string NickName;
 
     public static GameController Instance
     {
@@ -46,19 +46,20 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    public void playerPassedEvent()
+    public void playerPassedEvent(int _ID)
     {
-        gameEventID++;
+        gameEventID = _ID;
+
+        //GAME ID's
+        // ID = 1 means level started.
         foreach (MonoBehaviour _script in eventsSubscribedScripts)
         {
-            _script.Invoke("gameEventUpdated", 0);
+            _script.Invoke("gameEventUpdated", gameEventID);
         }
     }
 
     // Use this for initialization
     void Start () {
         DontDestroyOnLoad( gameObject);
-        Invoke("playerPassedEvent", 2f);
-        Invoke("playerPassedEvent", 4f);
     }
 }

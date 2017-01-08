@@ -31,10 +31,9 @@ public class ChoseCharacter : MonoBehaviour {
         SceneManager.LoadScene(index);
     }
 
-    public void Name(string name)
+    public void NickName(string name)
     {
-        GameController.Instance.Name = name;
-        Debug.Log("Name has been set to" + GameController.Instance.Name);
+        GameController.Instance.NickName = name;
     }
 	
 	// Update is called once per frame
