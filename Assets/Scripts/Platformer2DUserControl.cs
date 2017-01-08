@@ -10,6 +10,10 @@ namespace UnityStandardAssets._2D
         private bool p0_jump;
         private bool p1_jump;
 
+        private float climbVelocity;
+
+        public float climbSpeed = 5;
+
         //Variables for the ammo firing
         [SerializeField] private GameObject ammoPrefab;
         // private Transform firePoint;
@@ -41,6 +45,25 @@ namespace UnityStandardAssets._2D
 
             if (playerOne != null)
             {
+                if(playerOne.onLadder)
+                {
+                    climbVelocity = climbSpeed * Input.GetAxisRaw("P0_Vertical");
+                    if (climbVelocity > 0)
+                    {
+                        playerOne.m_Anim.SetBool("onLadder", playerOne.onLadder);
+                    }
+                    else
+                    {
+                        playerOne.m_Anim.SetBool("onLadder", !playerOne.onLadder);
+                    }
+
+                    playerOne.m_Rigidbody2D.velocity = new Vector2(playerOne.m_Rigidbody2D.velocity.x, climbVelocity);
+                }
+
+                if (!playerOne.onLadder)
+                {
+                    playerOne.m_Anim.SetBool("onLadder", false);
+                }
 
                 if (!p0_jump && !playerOne.onLadder)
                 {
@@ -55,6 +78,29 @@ namespace UnityStandardAssets._2D
 
             if (playerTwo != null)
             {
+
+                if (playerTwo.onLadder)
+                {
+                    Debug.Log("yeschhh");
+                    climbVelocity = climbSpeed * Input.GetAxisRaw("P1_Vertical");
+                    Debug.Log(climbVelocity);
+                    if (climbVelocity > 0)
+                    {
+                        playerTwo.m_Anim.SetBool("onLadder", playerTwo.onLadder);
+                    }
+                    else
+                    {
+                        playerTwo.m_Anim.SetBool("onLadder", !playerTwo.onLadder);
+                    }
+
+                    playerTwo.m_Rigidbody2D.velocity = new Vector2(playerTwo.m_Rigidbody2D.velocity.x, climbVelocity);
+                }
+
+                if (!playerTwo.onLadder)
+                {
+                    playerTwo.m_Anim.SetBool("onLadder", false);
+                }
+
                 if (!p1_jump && !playerTwo.onLadder)
                 {
                     if (CrossPlatformInputManager.GetButtonDown("P1_Jump"))

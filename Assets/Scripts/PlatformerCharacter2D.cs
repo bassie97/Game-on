@@ -17,16 +17,16 @@ namespace UnityStandardAssets._2D
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
         private bool m_Grounded;            // Whether or not the player is grounded.
-        private Animator m_Anim;            // Reference to the player's animator component.
-        private Rigidbody2D m_Rigidbody2D;
+        public Animator m_Anim;            // Reference to the player's animator component.
+        public Rigidbody2D m_Rigidbody2D;
         public bool m_FacingRight = true;  // For determining which way the player is currently facing.
 		public Transform firePoint;
         private int fireRate = 10;
         private float timeToFire = 0;
 
+
         public bool onLadder;
-        public float climbSpeed = 5;
-        private float climbVelocity;
+
         private float gravityStore;
 
         public int curHealth;
@@ -68,12 +68,14 @@ namespace UnityStandardAssets._2D
             }
 
         }
+
         private void OnTriggerEnter2D(Collider2D other){
 			if(other.CompareTag("PickUp")){
 				score = score + 5;
 				Destroy (other.gameObject);
 			}
 		}
+
 		private void Update(){
             if(m_Grounded == false)
             {
@@ -83,48 +85,6 @@ namespace UnityStandardAssets._2D
             {
                 m_Rigidbody2D.gravityScale = gravityStore;
             }
-            if (onLadder)
-            {
-                m_Rigidbody2D.gravityScale = 0f;
-
-
-                //FIXXXXXXXXXXXXXXXX VOOR ANDERE PLAYER
-                climbVelocity = climbSpeed * Input.GetAxisRaw("P0_Vertical");
-                if (climbVelocity > 0)
-                {
-                    m_Anim.SetBool("onLadder", onLadder);
-                }
-                else
-                {
-                    m_Anim.SetBool("onLadder", !onLadder);
-                }
-
-                m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, climbVelocity);
-
-            }
-
-            if(!onLadder)
-            {
-                m_Anim.SetBool("onLadder", false);
-               // m_Rigidbody2D.gravityScale = gravityStore;
-                
-            }
-            /* Will be removed at a later date
-            if (fireRate == 0)
-            {
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    throwAmmo();
-                }
-            }
-            else
-            {
-                if (Input.GetKeyDown(KeyCode.E) && Time.time > timeToFire)
-                {
-                    timeToFire = Time.time + 1 / fireRate;
-                    throwAmmo();
-                }
-            }*/
         }
 
         private void FixedUpdate()

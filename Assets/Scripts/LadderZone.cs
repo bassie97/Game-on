@@ -10,7 +10,7 @@ namespace UnityStandardAssets._2D
         // Use this for initialization
         void Start()
         {
-            m_Character = GetComponent<PlatformerCharacter2D>();
+            //m_Character = GetComponent<PlatformerCharacter2D>();
         }
 
         void OnTriggerEnter2D(Collider2D collision)
