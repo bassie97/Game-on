@@ -6,7 +6,7 @@ namespace UnityStandardAssets._2D
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlatformerCharacter2D : MonoBehaviour
     {
-        [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
+        [SerializeField] private float m_MaxSpeed = 5f;                    // The fastest the player can travel in the x axis.
         [SerializeField] private float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
@@ -75,8 +75,15 @@ namespace UnityStandardAssets._2D
 			}
 		}
 		private void Update(){
-
-            if(onLadder)
+            if(m_Grounded == false)
+            {
+                Debug.Log("Do you even try?");
+                m_Rigidbody2D.gravityScale = 3f;
+            }else if(m_GroundCheck == false)
+            {
+                m_Rigidbody2D.gravityScale = gravityStore;
+            }
+            if (onLadder)
             {
                 m_Rigidbody2D.gravityScale = 0f;
 
@@ -99,7 +106,7 @@ namespace UnityStandardAssets._2D
             if(!onLadder)
             {
                 m_Anim.SetBool("onLadder", false);
-                m_Rigidbody2D.gravityScale = gravityStore;
+               // m_Rigidbody2D.gravityScale = gravityStore;
                 
             }
             /* Will be removed at a later date
