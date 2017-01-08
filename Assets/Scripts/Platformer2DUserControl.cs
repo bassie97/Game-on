@@ -65,13 +65,13 @@ namespace UnityStandardAssets._2D
             }
             if (fireRate == 0)
             {
-                if (Input.GetKeyDown(KeyCode.E) && this.CompareTag("Player") && playerOne.ammoCount > 0)
+                if (Input.GetKeyDown(KeyCode.RightControl) && this.CompareTag("Player") && playerOne.ammoCount > 0)
                 {
                     Debug.Log("Are you triggered?");
                     throwAmmo(playerOne);
                     playerOne.ammoCount--;
                 }
-                if (Input.GetKeyDown(KeyCode.RightControl) && this.CompareTag("Player1") && playerTwo.ammoCount > 0)
+                if (Input.GetKeyDown(KeyCode.E) && this.CompareTag("Player1") && playerTwo.ammoCount > 0)
                 {
                     throwAmmo(playerTwo);
                     playerTwo.ammoCount--;
