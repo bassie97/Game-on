@@ -7,7 +7,8 @@ namespace UnityStandardAssets._2D
     public class CharInfo : MonoBehaviour {
 
         private Platformer2DUserControl UserControl1;
-        private Platformer2DUserControl UserControl2;
+        //private Platformer2DUserControl UserControl2;
+        private PlatformerControl2 UserControl2;
 
         public Sprite[] HeartSprites;
         public Image HeartUI1 = null;
@@ -25,8 +26,8 @@ namespace UnityStandardAssets._2D
         // Use this for initialization
         void Start() {
             UserControl1 = GameObject.FindGameObjectWithTag("Player").GetComponent<Platformer2DUserControl>();
-            UserControl2 = GameObject.FindGameObjectWithTag("Player1").GetComponent<Platformer2DUserControl>();
-
+            //UserControl2 = GameObject.FindGameObjectWithTag("Player1").GetComponent<Platformer2DUserControl>();
+            UserControl2 = GameObject.FindGameObjectWithTag("Player1").GetComponent<PlatformerControl2>();
 
             if (GameController.Instance.NickName != null)
             {
