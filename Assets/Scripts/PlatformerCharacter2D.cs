@@ -46,6 +46,7 @@ namespace UnityStandardAssets._2D
             m_GroundCheck = transform.Find("GroundCheck");
             m_Anim = GetComponent<Animator>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
+            m_Rigidbody2D.gravityScale = 0.5f;
             gravityStore = m_Rigidbody2D.gravityScale;
             curHealth = maxhealth;
         }
@@ -77,11 +78,10 @@ namespace UnityStandardAssets._2D
 		}
 
 		private void Update(){
-            if(m_Grounded == false)
+            if(m_Grounded == false && onLadder == false)
             {
-                Debug.Log("Do you even try?");
                 m_Rigidbody2D.gravityScale = 3f;
-            }else if(m_GroundCheck == false)
+            }else if(m_GroundCheck == true)
             {
                 m_Rigidbody2D.gravityScale = gravityStore;
             }
