@@ -5,10 +5,10 @@ using UnityStandardAssets.CrossPlatformInput;
 namespace UnityStandardAssets._2D
 {
     [RequireComponent(typeof (PlatformerCharacter2D))]
-    public class Platformer2DUserControl : MonoBehaviour
+    public class OutdatedAids : MonoBehaviour
     {
         private bool p0_jump;
-       // private bool p1_jump;
+        private bool p1_jump;
 
         private float climbVelocity;
 
@@ -22,7 +22,7 @@ namespace UnityStandardAssets._2D
 
         //The CharacterControllers
         public PlatformerCharacter2D playerOne;
-        //public PlatformerCharacter2D playerTwo;
+        public PlatformerCharacter2D playerTwo;
 
 
         void Start()
@@ -33,10 +33,10 @@ namespace UnityStandardAssets._2D
                 playerOne = GameObject.FindGameObjectWithTag("Player").GetComponent<PlatformerCharacter2D>();
             }
 
-           /* if (GameObject.FindGameObjectWithTag("Player1") != null)
+            if (GameObject.FindGameObjectWithTag("Player1") != null)
             {
                 playerTwo = GameObject.FindGameObjectWithTag("Player1").GetComponent<PlatformerCharacter2D>();
-            }*/
+            }
         }
 
 
@@ -47,9 +47,7 @@ namespace UnityStandardAssets._2D
             {
                 if(playerOne.onLadder)
                 {
-                    Debug.Log("Player0 on ladder");
                     climbVelocity = climbSpeed * Input.GetAxisRaw("P0_Vertical");
-                    Debug.Log(climbVelocity + "player0");
                     if (climbVelocity > 0)
                     {
                         playerOne.m_Anim.SetBool("onLadder", playerOne.onLadder);
@@ -78,7 +76,7 @@ namespace UnityStandardAssets._2D
                 }
             }
 
-           /* if (playerTwo != null)
+            if (playerTwo != null)
             {
 
                 if (playerTwo.onLadder)
@@ -111,7 +109,7 @@ namespace UnityStandardAssets._2D
                         p1_jump = CrossPlatformInputManager.GetButtonDown("P1_Jump");
                     }
                 }
-            }*/
+            }
             if (fireRate == 0)
             {
                 if (Input.GetKeyDown(KeyCode.RightControl) && this.CompareTag("Player") && playerOne.ammoCount > 0)
@@ -120,7 +118,7 @@ namespace UnityStandardAssets._2D
                     throwAmmo(playerOne);
                     playerOne.ammoCount--;
                 }
-               /* if (Input.GetKeyDown(KeyCode.E) && this.CompareTag("Player1") && playerTwo.ammoCount > 0)
+                if (Input.GetKeyDown(KeyCode.E) && this.CompareTag("Player1") && playerTwo.ammoCount > 0)
                 {
                     throwAmmo(playerTwo);
                     playerTwo.ammoCount--;
@@ -128,7 +126,7 @@ namespace UnityStandardAssets._2D
             }
             else
             {
-                   if (Input.GetKeyDown(KeyCode.E) && Time.time > timeToFire)
+                /*   if (Input.GetKeyDown(KeyCode.E) && Time.time > timeToFire)
                    {
                        timeToFire = Time.time + 1 / fireRate;
                        throwAmmo();
@@ -162,13 +160,13 @@ namespace UnityStandardAssets._2D
                 
             }
 
-            /*if (playerTwo != null)
+            if (playerTwo != null)
             {
                 h = CrossPlatformInputManager.GetAxis("P1_Horizontal");
                 playerTwo.Move(h, p1_jump);
                 
-            }*/
-            //p1_jump = false;
+            }
+            p1_jump = false;
             p0_jump = false;
         }
     }
