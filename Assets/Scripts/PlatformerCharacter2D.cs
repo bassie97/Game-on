@@ -184,11 +184,5 @@ namespace UnityStandardAssets._2D
         {
             Application.LoadLevel(Application.loadedLevel);
         }
-
-        public string PlayerName
-        {
-            get { return playerName; }
-            set { playerName = value; }
-        }
     }
 }
