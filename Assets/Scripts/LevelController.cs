@@ -11,6 +11,15 @@ public class LevelController : MonoBehaviour {
     public GameObject OnePlayerHUD;
     public GameObject TwoPlayerHUD;
 
+    [SerializeField]
+    private GameObject Player0;
+
+    [SerializeField]
+    private GameObject Player1;
+
+    [SerializeField]
+    private Camera cam;
+
     private void Awake()
     {
         GameController.Instance.subscribeScriptToGameEventUpdates(this);
@@ -43,11 +52,16 @@ public class LevelController : MonoBehaviour {
             if (GameController.Instance.AmountOfPlayers == 1)
             {
                 GameObject prefab = (GameObject)Instantiate(OnePlayerHUD, new Vector3(0, 0, 0), Quaternion.identity);
-                //prefab.transform.SetParent(canvas.transform, false);
+                prefab = (GameObject)Instantiate(Player0, new Vector3(0, 0, 0), Quaternion.identity);
+                cam.GetComponent<Camera2DFollow>().target = prefab.transform;
             }
             if(GameController.Instance.AmountOfPlayers == 2)
             {
                 GameObject prefab = (GameObject)Instantiate(TwoPlayerHUD, new Vector3(0, 0, 0), Quaternion.identity);
+                prefab = (GameObject)Instantiate(Player0, new Vector3(-6, 0, 0), Quaternion.identity);
+                cam.GetComponent<Camera2DFollow>().target = prefab.transform;
+                prefab = (GameObject)Instantiate(Player1, new Vector3(-8, 0, 0), Quaternion.identity);
+                cam.GetComponent<Camera2DFollow>().target1 = prefab.transform;
             }
         }
 

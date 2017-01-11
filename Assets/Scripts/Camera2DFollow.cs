@@ -21,33 +21,42 @@ public class Camera2DFollow : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         FindPlayers();
-		lastTargetPosition = AveragePosition();
+
+        if (target != null || target1 != null)
+        {
+            lastTargetPosition = AveragePosition();
+        }
 		//offsetZ = (transform.position - ((target.position + target1.position) / 2)).z;
 		transform.parent = null;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        
-        // only update lookahead pos if accelerating or changed direction
-        float xMoveDelta = (AveragePosition() - lastTargetPosition).x;
+        if (target != null || target1 != null)
+        {
+            // only update lookahead pos if accelerating or changed direction
+            float xMoveDelta = (AveragePosition() - lastTargetPosition).x;
 
-	    bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > lookAheadMoveThreshold;
+            bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > lookAheadMoveThreshold;
 
-		if (updateLookAheadTarget) {
-			lookAheadPos = lookAheadFactor * Vector3.right * Mathf.Sign(xMoveDelta);
-		} else {
-			lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, Time.deltaTime * lookAheadReturnSpeed);	
-		}
+            if (updateLookAheadTarget)
+            {
+                lookAheadPos = lookAheadFactor * Vector3.right * Mathf.Sign(xMoveDelta);
+            }
+            else
+            {
+                lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, Time.deltaTime * lookAheadReturnSpeed);
+            }
 
-        Vector3 aheadTargetPos = AveragePosition() + lookAheadPos + Vector3.forward;// * offsetZ;
-		Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
+            Vector3 aheadTargetPos = AveragePosition() + lookAheadPos + Vector3.forward;// * offsetZ;
+            Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
 
-		newPos = new Vector3 (newPos.x, Mathf.Clamp (newPos.y, yPosRestriction, Mathf.Infinity), -1);
+            newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, yPosRestriction, Mathf.Infinity), -1);
 
-		transform.position = newPos;
-		
-		lastTargetPosition = AveragePosition();		
+            transform.position = newPos;
+
+            lastTargetPosition = AveragePosition();
+        }	
 	}
 
 	void FindPlayers () {
