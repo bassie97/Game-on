@@ -85,6 +85,10 @@ namespace UnityStandardAssets._2D
             {
                 m_Rigidbody2D.gravityScale = gravityStore;
             }
+            if (this.transform.position.y <= -4)
+            {
+                Die();
+            }
         }
 
         private void FixedUpdate()
