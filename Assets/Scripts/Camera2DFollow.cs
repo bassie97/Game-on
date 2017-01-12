@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Camera2DFollow : MonoBehaviour {
 	
-	public Transform target;
-    public Transform target1;
+	public Transform target = null;
+    public Transform target1 = null;
 	public float damping = 1;
 	public float lookAheadFactor = 3;
 	public float lookAheadReturnSpeed = 0.5f;
