@@ -51,17 +51,22 @@ public class LevelController : MonoBehaviour {
             GameObject parent = GameObject.FindGameObjectWithTag("ChooseCharacter");
             if (GameController.Instance.AmountOfPlayers == 1)
             {
-                GameObject prefab = (GameObject)Instantiate(OnePlayerHUD, new Vector3(0, 0, 0), Quaternion.identity);
-                prefab = (GameObject)Instantiate(Player0, new Vector3(0, 0, 0), Quaternion.identity);
+                GameObject prefab = (GameObject)Instantiate(Player0, new Vector3(-19, -2, 0), Quaternion.identity);
                 cam.GetComponent<Camera2DFollow>().target = prefab.transform;
+                prefab = (GameObject)Instantiate(OnePlayerHUD, new Vector3(0, 0, 0), Quaternion.identity);
+                
+                
             }
             if(GameController.Instance.AmountOfPlayers == 2)
             {
-                GameObject prefab = (GameObject)Instantiate(TwoPlayerHUD, new Vector3(0, 0, 0), Quaternion.identity);
-                prefab = (GameObject)Instantiate(Player0, new Vector3(-6, 0, 0), Quaternion.identity);
+                GameObject prefab = (GameObject)Instantiate(Player0, new Vector3(-22, -2, 0), Quaternion.identity);
                 cam.GetComponent<Camera2DFollow>().target = prefab.transform;
-                prefab = (GameObject)Instantiate(Player1, new Vector3(-8, 0, 0), Quaternion.identity);
+                
+                
+                prefab = (GameObject)Instantiate(Player1, new Vector3(-19, -2, 0), Quaternion.identity);
                 cam.GetComponent<Camera2DFollow>().target1 = prefab.transform;
+
+                prefab = (GameObject)Instantiate(TwoPlayerHUD, new Vector3(0, 0, 0), Quaternion.identity);
             }
         }
 
