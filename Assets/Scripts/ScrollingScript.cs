@@ -16,6 +16,12 @@ public class ScrollingScript : MonoBehaviour {
 
     private List<SpriteRenderer> backgroundPart;
 
+    private SpriteRenderer firstChild;
+
+    private SpriteRenderer middleChild;
+
+    private SpriteRenderer lastChild;
+
     [SerializeField]
     private float layerOffset = 1;
 
@@ -53,37 +59,70 @@ public class ScrollingScript : MonoBehaviour {
 
         if (isLooping)
         {
-            // Get the first object.
+            // Get the middle object.
             // The list is ordered from left (x position) to right.
-            SpriteRenderer firstChild = backgroundPart.FirstOrDefault();
+            //middleChild = backgroundPart.FirstOrDefault();
+            middleChild = backgroundPart.ElementAt<SpriteRenderer>(1);
 
-            if (firstChild != null)
+            firstChild = backgroundPart.FirstOrDefault();
+
+            if (middleChild != null)
             {
+                //players going right
                 // Check if the child is already (partly) before the camera.
                 // We test the position first because the IsVisibleFrom
                 // method is a bit heavier to execute.
-                if (firstChild.transform.position.x < Camera.main.transform.position.x)
+                if (middleChild.transform.position.x < Camera.main.transform.position.x)
                 {
                     // If the child is already on the left of the camera,
                     // we test if it's completely outside and needs to be
                     // recycled.
-                    if (firstChild.IsVisibleFrom(Camera.main) == false)
+                    if (middleChild.IsVisibleFrom(Camera.main) == false)
                     {
                         // Get the last child position.
-                        SpriteRenderer lastChild = backgroundPart.LastOrDefault();
+                        lastChild = backgroundPart.LastOrDefault();
 
                         Vector3 lastPosition = lastChild.transform.position;
+                        //lastPosition += middleChild.transform.position;
                         Vector3 lastSize = (lastChild.bounds.max - lastChild.bounds.min);
 
                         // Set the position of the recyled one to be AFTER
                         // the last child.
                         // Note: Only work for horizontal scrolling currently.
-                        firstChild.transform.position = new Vector3(lastPosition.x + lastSize.x, firstChild.transform.position.y, firstChild.transform.position.z);
+                        firstChild.transform.position = new Vector3(lastPosition.x + lastSize.x, middleChild.transform.position.y, middleChild.transform.position.z);
 
                         // Set the recycled child to the last position
                         // of the backgroundPart list.
                         backgroundPart.Remove(firstChild);
                         backgroundPart.Add(firstChild);
+                    }
+                }
+
+                lastChild = firstChild = backgroundPart.LastOrDefault();
+                //players going left
+                if (middleChild.transform.position.x > Camera.main.transform.position.x)
+                {
+                    // If the child is already on the left of the camera,
+                    // we test if it's completely outside and needs to be
+                    // recycled.
+                    if (middleChild.IsVisibleFrom(Camera.main) == false)
+                    {
+                        // Get the first child position.
+                        firstChild = backgroundPart.FirstOrDefault();
+
+                        Vector3 lastPosition = firstChild.transform.position;
+                        Vector3 lastSize = (firstChild.bounds.max - firstChild.bounds.min);
+
+                        // Set the position of the recyled one to be AFTER
+                        // the last child.
+                        // Note: Only work for horizontal scrolling currently.
+                        lastChild.transform.position = new Vector3(lastPosition.x - lastSize.x, lastChild.transform.position.y, lastChild.transform.position.z);
+
+                        // Set the recycled child to the last position
+                        // of the backgroundPart list.
+                        backgroundPart.Remove(lastChild);
+                        //backgroundPart.Add(lastChild);
+                        backgroundPart.Insert(0, lastChild);
                     }
                 }
             }
