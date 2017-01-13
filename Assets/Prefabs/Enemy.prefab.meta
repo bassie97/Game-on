@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: da1b637585c8cdd4387a16cbb6de13cf
 timeCreated: 1481640225
+=======
+guid: 1fb44fb01a4ca254b903d3f7423a1a15
+timeCreated: 1484320565
+>>>>>>> feature/enemyInteraction
 licenseType: Free
 NativeFormatImporter:
   userData: 
