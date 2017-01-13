@@ -141,11 +141,15 @@ public class EnemyAI : MonoBehaviour {
                 pathIsEnded = true;
                 return;
 <<<<<<< HEAD
+<<<<<<< HEAD
             
            // Debug.Log("End of path reached.");
             pathIsEnded = true;
             return;
         }
+=======
+            }
+>>>>>>> feature/enemyInteraction
 =======
             }
 >>>>>>> feature/enemyInteraction
