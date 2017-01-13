@@ -111,7 +111,7 @@ public class EnemyAI : MonoBehaviour {
     }
     void FixedUpdate()
     {
-        Debug.Log("The enemy speed is:" + rb.velocity);
+        Debug.Log("Left border coor: " + lBorder + "Right corner coor: " + rBorder + "Player coor: " + target.position.x);
         if (target == null)
         {
             return;
@@ -121,8 +121,17 @@ public class EnemyAI : MonoBehaviour {
         {
             return;
         }
-        if ((target.transform.position.x > lBorder && target.transform.position.x < rBorder))
+        Debug.Log("Enemy velocity: " + rb.velocity);
+        if ((target.transform.position.x > lBorder && (Mathf.Abs(target.transform.position.x) < rBorder && rBorder > lBorder)))
         {
+            if(rb.velocity.x < 0 && !m_FacingRight)
+            {
+                Flip();
+            }
+            else if (rb.velocity.x > 0 && m_FacingRight)
+            {
+                Flip();
+            }
             if (currentWayPoint >= path.vectorPath.Count)
             {
                 if (pathIsEnded)
