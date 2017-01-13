@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Camera2DFollow : MonoBehaviour {
 	
-	public Transform target;
-    public Transform target1;
+	public Transform target = null;
+    public Transform target1 = null;
 	public float damping = 1;
 	public float lookAheadFactor = 3;
 	public float lookAheadReturnSpeed = 0.5f;
@@ -20,41 +20,43 @@ public class Camera2DFollow : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-        Debug.Log("Start");
-		lastTargetPosition = (target.position + target1.position)/2;
+        FindPlayers();
+
+        if (target != null || target1 != null)
+        {
+            lastTargetPosition = AveragePosition();
+        }
 		//offsetZ = (transform.position - ((target.position + target1.position) / 2)).z;
 		transform.parent = null;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (target != null || target1 != null)
+        {
+            // only update lookahead pos if accelerating or changed direction
+            float xMoveDelta = (AveragePosition() - lastTargetPosition).x;
 
-		if (target == null || target1 == null) {
-			FindPlayers ();
-			return;
-		}
+            bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > lookAheadMoveThreshold;
 
-		// only update lookahead pos if accelerating or changed direction
-		float xMoveDelta = (((target.position + target1.position) / 2) - lastTargetPosition).x;
+            if (updateLookAheadTarget)
+            {
+                lookAheadPos = lookAheadFactor * Vector3.right * Mathf.Sign(xMoveDelta);
+            }
+            else
+            {
+                lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, Time.deltaTime * lookAheadReturnSpeed);
+            }
 
-	    bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > lookAheadMoveThreshold;
+            Vector3 aheadTargetPos = AveragePosition() + lookAheadPos + Vector3.forward;// * offsetZ;
+            Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
 
-		if (updateLookAheadTarget) {
-			lookAheadPos = lookAheadFactor * Vector3.right * Mathf.Sign(xMoveDelta);
-		} else {
-			lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, Time.deltaTime * lookAheadReturnSpeed);	
-		}
+            newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, yPosRestriction, Mathf.Infinity), -1);
 
-        Vector3 aheadTargetPos = ((target.position + target1.position) / 2) + lookAheadPos + Vector3.forward;// * offsetZ;
-		Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
+            transform.position = newPos;
 
-		newPos = new Vector3 (newPos.x, Mathf.Clamp (newPos.y, yPosRestriction, Mathf.Infinity), -1);
-
-		transform.position = newPos;
-        Debug.Log(target.position + "and " + target1.position);
-        Debug.Log(newPos);
-		
-		lastTargetPosition = ((target.position + target1.position) / 2);		
+            lastTargetPosition = AveragePosition();
+        }	
 	}
 
 	void FindPlayers () {
@@ -68,4 +70,21 @@ public class Camera2DFollow : MonoBehaviour {
             nextTimeToSearch = Time.time + 0.5f;
 		}
 	}
+
+    Vector3 AveragePosition()
+    {
+        if (target != null && target1 != null)
+        {
+            return (target.position + target1.position) / 2;
+        }
+        else if (target != null)
+        {
+            return target.position;
+        }
+
+        else
+        {
+            return target1.position;
+        }
+    }
 }
