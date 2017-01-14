@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SaveInformation
+public class SaveInformation : MonoBehaviour
 {
+    public void saveAllInformation(string levelProgress, string player)
+    {      
+        PlayerPrefs.SetString("LevelProgress", levelProgress);
+        PlayerPrefs.SetString("Player1", player);
+    }
 
-    public static void saveAllInformation()
+    void Awake()
     {
-        /*
-        PlayerPrefs.SetInt("PLAYERLEVEL", GameInformation.PlayerLevel);
-        PlayerPrefs.SetInt("PLAYERLEVEL", GameInformation.PlayerLevel);
-        */
+        DontDestroyOnLoad(gameObject);
     }
 
 
