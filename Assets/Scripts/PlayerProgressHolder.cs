@@ -7,22 +7,42 @@ public class PlayerProgressHolder : MonoBehaviour {
 
     public SaveInformation save;
     PlayerProgress progress;
-    public string levelProgress;
+    public int levelProgress;
     public bool ProgressLoaded { get; private set; }
     Scene scene;
-    string playerName;
+    public string playerName;
+
+    private static PlayerProgressHolder instance;
+
+    public static PlayerProgressHolder Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<PlayerProgressHolder>();
+#if UNITY_EDITOR
+                if (FindObjectsOfType<PlayerProgressHolder>().Length > 1)
+                {
+                    Debug.LogError("There is more than one game controller in the scene");
+                }
+#endif
+            }
+            return instance;
+        }
+    }
 
     void Update()
     {
         scene = SceneManager.GetActiveScene();
         if (scene.name == "LevelTwo")
         {
-            levelProgress = "Level Two";
+            levelProgress = 2;
             Debug.Log(scene.name);
             save.saveAllInformation(levelProgress, "Gerbrand");
         }else if (scene.name == "SceneTutorial")
         {
-            levelProgress = "Scene Tutorial";
+            levelProgress = 10;
             Debug.Log(scene.name);
             save.saveAllInformation(levelProgress, "Gerbrand");
         }
@@ -35,7 +55,9 @@ public class PlayerProgressHolder : MonoBehaviour {
 
     void Start()
     {
-        ProgressLoaded = true;
+        if (playerName !=null) {
+            ProgressLoaded = true;
+        }
     }
 
 
@@ -49,7 +71,7 @@ public class PlayerProgressHolder : MonoBehaviour {
     {
         playerName = playername;
     }
-    public void LoadLevel(string levelprogress)
+    public void LoadLevel(int levelprogress)
     {
         levelProgress = levelprogress;
     }

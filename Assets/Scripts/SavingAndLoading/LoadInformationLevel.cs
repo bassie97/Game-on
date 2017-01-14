@@ -5,13 +5,31 @@ using UnityEngine.UI;
 public class LoadInformationLevel : MonoBehaviour
 {
     public Text levelProgress;
-    PlayerProgressHolder progress;
     string level;
     void Start()
     {
-        level = PlayerPrefs.GetString("LevelProgress");
-        levelProgress = GetComponent<Text>();
-        levelProgress.text = level;
+        level = PlayerPrefs.GetInt("LevelProgressPlayer1").ToString();
+        if (PlayerPrefs.GetInt("LevelProgressPlayer1") == 0)
+        {
+            levelProgress = GetComponent<Text>();
+            levelProgress.text = "Has to start his journey!";
+        }
+        if (PlayerPrefs.GetInt("LevelProgressPlayer1") == 1)
+        {
+            levelProgress = GetComponent<Text>();
+            levelProgress.text = "Level 1";
+        }
+        if (PlayerPrefs.GetInt("LevelProgressPlayer1") == 2)
+        {
+            levelProgress = GetComponent<Text>();
+            levelProgress.text = "Level 2";
+        }
+        if (PlayerPrefs.GetInt("LevelProgressPlayer1") == 10)
+        {
+            levelProgress = GetComponent<Text>();
+            levelProgress.text = "Scene tutorial";
+        }
+
 
     }
 
@@ -22,6 +40,6 @@ public class LoadInformationLevel : MonoBehaviour
     }
     public void sendData()
     {
-        progress.LoadName(level);
+        PlayerProgressHolder.Instance.LoadName(level);
     }
 }

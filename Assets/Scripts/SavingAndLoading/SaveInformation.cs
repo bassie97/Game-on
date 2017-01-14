@@ -3,9 +3,9 @@ using System.Collections;
 
 public class SaveInformation : MonoBehaviour
 {
-    public void saveAllInformation(string levelProgress, string player)
+    public void saveAllInformation(int levelProgress, string player)
     {      
-        PlayerPrefs.SetString("LevelProgress", levelProgress);
+        PlayerPrefs.SetInt("LevelProgressPlayer1", levelProgress);
         PlayerPrefs.SetString("Player1", player);
     }
 
