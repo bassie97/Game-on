@@ -50,14 +50,8 @@ namespace UnityStandardAssets._2D
                     Debug.Log("Player0 on ladder");
                     climbVelocity = climbSpeed * Input.GetAxisRaw("P0_Vertical");
                     Debug.Log(climbVelocity + "player0");
-                    if (climbVelocity > 0)
-                    {
-                        playerOne.m_Anim.SetBool("onLadder", playerOne.onLadder);
-                    }
-                    else
-                    {
-                        playerOne.m_Anim.SetBool("onLadder", !playerOne.onLadder);
-                    }
+                    playerOne.m_Anim.SetBool("onLadder", playerOne.onLadder);
+                    
 
                     playerOne.m_Rigidbody2D.velocity = new Vector2(playerOne.m_Rigidbody2D.velocity.x, climbVelocity);
                 }
@@ -116,7 +110,6 @@ namespace UnityStandardAssets._2D
             {
                 if (Input.GetKeyDown(KeyCode.RightControl) && this.CompareTag("Player") && playerOne.ammoCount > 0)
                 {
-                    Debug.Log("Are you triggered?");
                     throwAmmo(playerOne);
                     playerOne.ammoCount--;
                 }
