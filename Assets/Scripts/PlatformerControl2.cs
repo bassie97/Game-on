@@ -32,17 +32,9 @@ namespace UnityStandardAssets._2D
 
                 if (playerTwo.onLadder)
                 {
-                    Debug.Log("Player1 on ladder");
                     climbVelocity = climbSpeed * Input.GetAxisRaw("P1_Vertical");
-                    Debug.Log(Input.GetAxisRaw("P1_Vertical") + "player1");
-                    if (climbVelocity > 0)
-                    {
-                        playerTwo.m_Anim.SetBool("onLadder", playerTwo.onLadder);
-                    }
-                    else
-                    {
-                        playerTwo.m_Anim.SetBool("onLadder", !playerTwo.onLadder);
-                    }
+                    playerTwo.m_Anim.SetBool("onLadder", playerTwo.onLadder);
+                   
 
                     playerTwo.m_Rigidbody2D.velocity = new Vector2(playerTwo.m_Rigidbody2D.velocity.x, climbVelocity);
                 }
@@ -56,8 +48,6 @@ namespace UnityStandardAssets._2D
                 {
                     if (CrossPlatformInputManager.GetButtonDown("P1_Jump"))
                     {
-                        Debug.Log("p1 jump");
-                        Debug.Log(Input.GetAxisRaw("P1_Vertical") + "player1");
                         p1_jump = CrossPlatformInputManager.GetButtonDown("P1_Jump");
                     }
                 }

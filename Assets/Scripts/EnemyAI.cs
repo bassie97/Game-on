@@ -47,12 +47,13 @@ public class EnemyAI : MonoBehaviour {
 		m_Anim.SetBool("Ground", true);
         m_Anim.SetFloat("vSpeed", rb.velocity.y);
         m_Anim.SetFloat("Speed", rb.velocity.y);
+        rb.AddForce(-move * 50);
         if (target == null)
         {
             Debug.LogError("NO player found");
             return;
         }
-        rb.AddForce(-move * 50);
+        
         StartCoroutine(UpdatePath());
     }
 
@@ -61,7 +62,7 @@ public class EnemyAI : MonoBehaviour {
         if(target == null)
         {
             //TODO: Insert a playersearch
-            Debug.LogError("Target(player) not found.");
+            
             yield break;
         }
         seeker.StartPath(transform.position, target.position, OnPathComplete);
@@ -111,9 +112,9 @@ public class EnemyAI : MonoBehaviour {
     }
     void FixedUpdate()
     {
-        Debug.Log("Left border coor: " + lBorder + "Right corner coor: " + rBorder + "Player coor: " + target.position.x);
         if (target == null)
         {
+            target = GameObject.FindWithTag("Player").transform;
             return;
         }
         //TODO: Always look at player
