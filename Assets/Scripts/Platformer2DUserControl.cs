@@ -47,9 +47,7 @@ namespace UnityStandardAssets._2D
             {
                 if(playerOne.onLadder)
                 {
-                    Debug.Log("Player0 on ladder");
                     climbVelocity = climbSpeed * Input.GetAxisRaw("P0_Vertical");
-                    Debug.Log(climbVelocity + "player0");
                     playerOne.m_Anim.SetBool("onLadder", playerOne.onLadder);
                     
 
@@ -66,7 +64,6 @@ namespace UnityStandardAssets._2D
                     // Read the jump input in Update so button presses aren't missed.
                     if (CrossPlatformInputManager.GetButtonDown("P0_Jump"))
                     {
-                        Debug.Log("P0_jump");
                         p0_jump = CrossPlatformInputManager.GetButtonDown("P0_Jump");
                     }
                 }

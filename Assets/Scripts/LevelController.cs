@@ -41,6 +41,8 @@ public class LevelController : MonoBehaviour {
     //this method will be automatically called whenever the player passes an important event in the game;
     void gameEventUpdated()
     {
+
+        Debug.Log("respawn players");
         
         // If ID = 1 level has started
         if (GameController.Instance.gameEventID == 1)
@@ -70,5 +72,10 @@ public class LevelController : MonoBehaviour {
             }
         }
 
+    }
+
+    private void OnDestroy()
+    {
+        GameController.Instance.deSubscribeScriptToGameEventUpdates(this);
     }
 }
