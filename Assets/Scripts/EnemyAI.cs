@@ -11,10 +11,11 @@ public class EnemyAI : MonoBehaviour {
 
     //Path update rate per second
     public float updateRate = 2f;
-
+    private bool m_FacingRight = true;
     private Seeker seeker;
     private Rigidbody2D rb;
 	private Animator m_Anim;
+    private Vector2 move = new Vector2(5f, 0f);
 
     //The calculated path
     public Path path;
@@ -23,30 +24,36 @@ public class EnemyAI : MonoBehaviour {
     public float speed = 300f;
     public ForceMode2D fMode;
 
+    //Obstacles info
+    private float rBorder;
+    private float lBorder;
+
     //Health
     public int health = 100;
     [HideInInspector]
     public bool pathIsEnded = false;
-
+    public bool hit = false;
     //max distance from AI to waypoint untill next waypoint trigger
     public float nextWaypointDistance = 3;
 
     //The waypoint we are currently moving towards 
     private int currentWayPoint = 0;
-
     void Start()
     {
+        
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 		m_Anim = GetComponent<Animator>();
 		m_Anim.SetBool("Ground", true);
         m_Anim.SetFloat("vSpeed", rb.velocity.y);
         m_Anim.SetFloat("Speed", rb.velocity.y);
+        rb.AddForce(-move * 50);
         if (target == null)
         {
-            //Debug.LogError("NO player found");
+            Debug.LogError("NO player found");
             return;
         }
+        
         StartCoroutine(UpdatePath());
     }
 
@@ -55,7 +62,7 @@ public class EnemyAI : MonoBehaviour {
         if(target == null)
         {
             //TODO: Insert a playersearch
-            //Debug.LogError("Target(player) not found.");
+            
             yield break;
         }
         seeker.StartPath(transform.position, target.position, OnPathComplete);
@@ -74,10 +81,23 @@ public class EnemyAI : MonoBehaviour {
                 Destroy(this.gameObject);
             }
         }
+        if (other.CompareTag("Obstacle"))
+        {
+            rb.velocity = Vector2.zero;
+            Flip();
+            if (m_FacingRight && rBorder == 0)
+            {
+                rBorder = other.transform.position.x;
+            }
+            if (!m_FacingRight && lBorder == 0)
+            {
+                lBorder = other.transform.position.x;
+            }
+        }
     }
     public void OnPathComplete(Path p)
     {
-        //Debug.Log("We got a path, did it have an error?"+ p.error);
+        Debug.Log("We got a path, did it have an error?"+ p.error);
         if (!p.error)
         {
             path = p;
@@ -87,46 +107,79 @@ public class EnemyAI : MonoBehaviour {
     void Update()
     {
         m_Anim.SetFloat("vSpeed", rb.velocity.y);
-        m_Anim.SetFloat("Speed", rb.velocity.y);
+        m_Anim.SetFloat("Speed", Mathf.Abs(transform.InverseTransformDirection(rb.velocity).x));
+
     }
     void FixedUpdate()
     {
         if (target == null)
         {
+            target = GameObject.FindWithTag("Player").transform;
             return;
         }
-         //TODO: Always look at player
-         if(path == null)
+        //TODO: Always look at player
+        if (path == null)
         {
             return;
         }
+        Debug.Log("Enemy velocity: " + rb.velocity);
+        if ((target.transform.position.x > lBorder && (Mathf.Abs(target.transform.position.x) < rBorder && rBorder > lBorder)))
+        {
+            if(rb.velocity.x < 0 && !m_FacingRight)
+            {
+                Flip();
+            }
+            else if (rb.velocity.x > 0 && m_FacingRight)
+            {
+                Flip();
+            }
+            if (currentWayPoint >= path.vectorPath.Count)
+            {
+                if (pathIsEnded)
+                    return;
 
-         if(currentWayPoint >= path.vectorPath.Count)
-        {
-            if (pathIsEnded)
+                Debug.Log("End of path reached.");
+                pathIsEnded = true;
                 return;
-            
-           // Debug.Log("End of path reached.");
-            pathIsEnded = true;
-            return;
+            }
+
+            pathIsEnded = false;
+
+            //Find direction to next waypoint
+            Vector3 dir = (path.vectorPath[currentWayPoint] - transform.position).normalized;
+            dir *= speed * Time.fixedDeltaTime;
+
+            //Move the AI
+            rb.AddForce(dir, fMode);
+            float dist = Vector3.Distance(transform.position, path.vectorPath[currentWayPoint]);
+            if (dist < nextWaypointDistance)
+            {
+                currentWayPoint++;
+                return;
+            }
         }
-
-        pathIsEnded = false;
-
-        //Find direction to next waypoint
-        Vector3 dir = (path.vectorPath[currentWayPoint] - transform.position).normalized;
-        dir *= speed * Time.fixedDeltaTime;
-
-        //Move the AI
-        rb.AddForce(dir, fMode);
-        float dist = Vector3.Distance(transform.position, path.vectorPath[currentWayPoint]);
-        if (dist < nextWaypointDistance)
+        else
         {
-            currentWayPoint++;
-            return;
+            if (m_FacingRight && Mathf.Abs(transform.InverseTransformDirection(rb.velocity).x) < 5f)
+            {
+                Debug.Log(!hit && m_FacingRight);
+                rb.AddForce(-move * 1f);
+            }
+            if (!m_FacingRight && Mathf.Abs(transform.InverseTransformDirection(rb.velocity).x) < 5f)
+            {
+                rb.AddForce(move * 1f);
+            }
         }
+    }
+    private void Flip()
+    {
+        // Switch the way the player is labelled as facing.
+        m_FacingRight = !m_FacingRight;
 
-        
+        // Multiply the player's x local scale by -1.
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 }
 

@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Camera2DFollow : MonoBehaviour {
 	
-	public Transform target;
-    public Transform target1;
+	public Transform target = null;
+    public Transform target1 = null;
 	public float damping = 1;
 	public float lookAheadFactor = 3;
 	public float lookAheadReturnSpeed = 0.5f;
@@ -17,9 +17,15 @@ public class Camera2DFollow : MonoBehaviour {
 	Vector3 lookAheadPos;
 
 	float nextTimeToSearch = 0;
-	
-	// Use this for initialization
-	void Start () {
+
+    public bool bounds;
+
+    public Vector3 minCamPos;
+    public Vector3 maxCamPos;
+
+    // Use this for initialization
+    void Start () {         
+
         FindPlayers();
 
         if (target != null || target1 != null)
@@ -52,6 +58,10 @@ public class Camera2DFollow : MonoBehaviour {
             Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
 
             newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, yPosRestriction, Mathf.Infinity), -1);
+
+            newPos = new Vector3(Mathf.Clamp(newPos.x, minCamPos.x, maxCamPos.x),
+                Mathf.Clamp(newPos.y, minCamPos.y, maxCamPos.y),
+                newPos.z);
 
             transform.position = newPos;
 
