@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class LoadInformation : MonoBehaviour {
     public Text playerName;
-    string name;
+    string naam;
     void Start () {
-        name = PlayerPrefs.GetString("Player1");
+        naam = PlayerPrefs.GetString("PlayerName"+PlayerProgressHolder.Instance.playerID);
         playerName = GetComponent<Text>();
-        playerName.text = name;
+        playerName.text = naam;
     }
 	
 	// Update is called once per frame
@@ -18,6 +18,6 @@ public class LoadInformation : MonoBehaviour {
 
     public void sendData()
     {
-        PlayerProgressHolder.Instance.LoadName(name);
+        PlayerProgressHolder.Instance.LoadName(naam);
     }
 }

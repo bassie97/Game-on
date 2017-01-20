@@ -7,18 +7,20 @@ public class LoadPlayers : MonoBehaviour {
     // Use this for initialization
     public Object prefab1;
     public Object prefab2;
+    private int counter = 0;
     void Start () {
-        GameObject canvas = GameObject.FindGameObjectWithTag("ChooseCharacter");
+        GameObject canvas = GameObject.FindGameObjectWithTag("LoadUser");
 
-        if (PlayerPrefs.HasKey("Player1"))
+        if (PlayerPrefs.HasKey("PlayerID"+counter))
         {
-            GameObject prefab = (GameObject)Instantiate(prefab1, new Vector3(51, -5, 0), Quaternion.identity);
+            GameObject prefab = (GameObject)Instantiate(prefab1, new Vector3(-200, 50, 0), Quaternion.identity);
             prefab.transform.SetParent(canvas.transform, false);
-            GameController.Instance.NickName = PlayerPrefs.GetString("Player1");
+            GameController.Instance.NickName = PlayerPrefs.GetString("Player"+counter);
         }
-        if (PlayerPrefs.HasKey("Player2"))
+        counter++;
+        if (PlayerPrefs.HasKey("PlayerID"+counter))
         {
-            GameObject prefab = (GameObject)Instantiate(prefab2, new Vector3(51, -5, 0), Quaternion.identity);
+            GameObject prefab = (GameObject)Instantiate(prefab2, new Vector3(-200, 0, 0), Quaternion.identity);
             prefab.transform.SetParent(canvas.transform, false);
         }        
     }

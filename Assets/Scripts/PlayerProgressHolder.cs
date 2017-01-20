@@ -7,10 +7,13 @@ public class PlayerProgressHolder : MonoBehaviour {
 
     public SaveInformation save;
     PlayerProgress progress;
-    public int levelProgress;
+    
     public bool ProgressLoaded { get; private set; }
     Scene scene;
+    public int playerID;
+    public int levelProgress;
     public string playerName;
+    public int singleplayer;
 
     private static PlayerProgressHolder instance;
 
@@ -39,12 +42,12 @@ public class PlayerProgressHolder : MonoBehaviour {
         {
             levelProgress = 2;
             Debug.Log(scene.name);
-            save.saveAllInformation(levelProgress, "Gerbrand");
+            save.saveAllInformation(playerID,levelProgress);
         }else if (scene.name == "SceneTutorial")
         {
             levelProgress = 10;
             Debug.Log(scene.name);
-            save.saveAllInformation(levelProgress, "Gerbrand");
+            save.saveAllInformation(playerID, levelProgress);
         }
         
     }
@@ -57,6 +60,10 @@ public class PlayerProgressHolder : MonoBehaviour {
     {
         if (playerName !=null) {
             ProgressLoaded = true;
+        }
+        if(GameController.Instance.AmountOfPlayers == 1)
+        {
+
         }
     }
 

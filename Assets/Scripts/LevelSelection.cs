@@ -9,6 +9,8 @@ public class LevelSelection : MonoBehaviour {
     public Object prefab3;
     public Object prefab4;
     public Object prefab5;
+    private GameObject instObj;
+
     void Update()
     {
         
@@ -18,18 +20,27 @@ public class LevelSelection : MonoBehaviour {
     {
         if (PlayerProgressHolder.Instance.ProgressLoaded == true)
         {
-            Debug.Log("hallo1");
             //SceneManager.LoadScene(sceneToLoad);
             GameObject canvas = GameObject.FindGameObjectWithTag("ChooseCharacter");
-            Debug.Log(PlayerPrefs.GetInt("LevelProgressPlayer1"));
-            if (PlayerPrefs.HasKey("LevelProgressPlayer1"))
+            int level = PlayerPrefs.GetInt("LevelProgress"+PlayerProgressHolder.Instance.playerID);
+            if (level >= 1)
             {
-                GameObject prefab = (GameObject)Instantiate(prefab1, new Vector3(51, -5, 0), Quaternion.identity);
+                GameObject prefab = (GameObject)Instantiate(prefab1, new Vector3(-200, 0, 0), Quaternion.identity);
+                prefab.transform.SetParent(canvas.transform, false);    
+            }
+            if (level >= 2)
+            {
+                GameObject prefab = (GameObject)Instantiate(prefab2, new Vector3(0, 0, 0), Quaternion.identity);
                 prefab.transform.SetParent(canvas.transform, false);
             }
-            if (PlayerPrefs.HasKey("Player2"))
+            if (level >= 3)
             {
-                GameObject prefab = (GameObject)Instantiate(prefab2, new Vector3(51, -5, 0), Quaternion.identity);
+                GameObject prefab = (GameObject)Instantiate(prefab3, new Vector3(200, 0, 0), Quaternion.identity);
+                prefab.transform.SetParent(canvas.transform, false);
+            }
+            if (level >= 4)
+            {
+                GameObject prefab = (GameObject)Instantiate(prefab4, new Vector3(400, 0, 0), Quaternion.identity);
                 prefab.transform.SetParent(canvas.transform, false);
             }
         }
