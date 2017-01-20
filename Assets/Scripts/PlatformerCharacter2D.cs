@@ -55,7 +55,10 @@ namespace UnityStandardAssets._2D
 
         private void OnDestroy()
         {
-            GameController.Instance.deSubscribeScriptToGameEventUpdates(this);
+            if(GameController.Instance != null)
+            {
+                GameController.Instance.deSubscribeScriptToGameEventUpdates(this);
+            }
         }
 
         //this method will be automatically called whenever the player passes an important event in the game;

@@ -76,6 +76,9 @@ public class LevelController : MonoBehaviour {
 
     private void OnDestroy()
     {
-        GameController.Instance.deSubscribeScriptToGameEventUpdates(this);
+        if (GameController.Instance != null)
+        {
+            GameController.Instance.deSubscribeScriptToGameEventUpdates(this);
+        }
     }
 }
