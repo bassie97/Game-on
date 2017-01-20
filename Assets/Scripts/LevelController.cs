@@ -11,6 +11,15 @@ public class LevelController : MonoBehaviour {
     public GameObject OnePlayerHUD;
     public GameObject TwoPlayerHUD;
 
+    [SerializeField]
+    private GameObject Player0;
+
+    [SerializeField]
+    private GameObject Player1;
+
+    [SerializeField]
+    private Camera cam;
+
     private void Awake()
     {
         GameController.Instance.subscribeScriptToGameEventUpdates(this);
@@ -32,6 +41,8 @@ public class LevelController : MonoBehaviour {
     //this method will be automatically called whenever the player passes an important event in the game;
     void gameEventUpdated()
     {
+
+        Debug.Log("respawn players");
         
         // If ID = 1 level has started
         if (GameController.Instance.gameEventID == 1)
@@ -42,14 +53,32 @@ public class LevelController : MonoBehaviour {
             GameObject parent = GameObject.FindGameObjectWithTag("ChooseCharacter");
             if (GameController.Instance.AmountOfPlayers == 1)
             {
-                GameObject prefab = (GameObject)Instantiate(OnePlayerHUD, new Vector3(0, 0, 0), Quaternion.identity);
-                //prefab.transform.SetParent(canvas.transform, false);
+                GameObject prefab = (GameObject)Instantiate(Player0, new Vector3(-19, -2, 0), Quaternion.identity);
+                cam.GetComponent<Camera2DFollow>().target = prefab.transform;
+                prefab = (GameObject)Instantiate(OnePlayerHUD, new Vector3(0, 0, 0), Quaternion.identity);
+                
+                
             }
             if(GameController.Instance.AmountOfPlayers == 2)
             {
-                GameObject prefab = (GameObject)Instantiate(TwoPlayerHUD, new Vector3(0, 0, 0), Quaternion.identity);
+                GameObject prefab = (GameObject)Instantiate(Player0, new Vector3(-22, -2, 0), Quaternion.identity);
+                cam.GetComponent<Camera2DFollow>().target = prefab.transform;
+                
+                
+                prefab = (GameObject)Instantiate(Player1, new Vector3(-19, -2, 0), Quaternion.identity);
+                cam.GetComponent<Camera2DFollow>().target1 = prefab.transform;
+
+                prefab = (GameObject)Instantiate(TwoPlayerHUD, new Vector3(0, 0, 0), Quaternion.identity);
             }
         }
 
+    }
+
+    private void OnDestroy()
+    {
+        if (GameController.Instance != null)
+        {
+            GameController.Instance.deSubscribeScriptToGameEventUpdates(this);
+        }
     }
 }

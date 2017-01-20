@@ -27,6 +27,7 @@ namespace UnityStandardAssets._2D
         void Start() {
             UserControl1 = GameObject.FindGameObjectWithTag("Player").GetComponent<Platformer2DUserControl>();
             //UserControl2 = GameObject.FindGameObjectWithTag("Player1").GetComponent<Platformer2DUserControl>();
+
             UserControl2 = GameObject.FindGameObjectWithTag("Player1").GetComponent<PlatformerControl2>();
 
             if (GameController.Instance.NickName != null)

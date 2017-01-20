@@ -45,16 +45,20 @@ namespace UnityStandardAssets._2D
             firePoint = transform.Find("FirePoint");
             m_GroundCheck = transform.Find("GroundCheck");
             m_Anim = GetComponent<Animator>();
+            this.gameObject.SetActive(false);
+            this.gameObject.SetActive(true);
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
             m_Rigidbody2D.gravityScale = 0.5f;
             gravityStore = m_Rigidbody2D.gravityScale;
             curHealth = maxhealth;
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
-            Debug.Log(this);
-            GameController.Instance.deSubscribeScriptToGameEventUpdates(this);
+            if(GameController.Instance != null)
+            {
+                GameController.Instance.deSubscribeScriptToGameEventUpdates(this);
+            }
         }
 
         //this method will be automatically called whenever the player passes an important event in the game;
@@ -71,8 +75,8 @@ namespace UnityStandardAssets._2D
         }
 
         private void OnTriggerEnter2D(Collider2D other){
-			if(other.CompareTag("PickUp")){
-				score = score + 5;
+			if(other.CompareTag("AmmoObject")){
+				ammoCount = ammoCount + 1;
 				Destroy (other.gameObject);
 			}
 		}
@@ -103,9 +107,11 @@ namespace UnityStandardAssets._2D
             for (int i = 0; i < colliders.Length; i++)
             {
                 if (colliders[i].gameObject != gameObject)
+                {
                     m_Grounded = true;
+                }
             }
-            m_Anim.SetBool("Ground", m_Grounded);
+            m_Anim.SetBool("test", m_Grounded);
 
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
@@ -148,12 +154,12 @@ namespace UnityStandardAssets._2D
             }
 
             // If the player should jump...
-            if (m_Grounded && jump && m_Anim.GetBool("Ground"))
+            if (m_Grounded && jump && m_Anim.GetBool("test"))
             {
                 
                 // Add a vertical force to the player.
                 m_Grounded = false;
-                m_Anim.SetBool("Ground", false);
+                m_Anim.SetBool("test", false);
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             }
         }

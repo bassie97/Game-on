@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Camera2DFollow : MonoBehaviour {
 	
-	public Transform target;
-    public Transform target1;
+	public Transform target = null;
+    public Transform target1 = null;
 	public float damping = 1;
 	public float lookAheadFactor = 3;
 	public float lookAheadReturnSpeed = 0.5f;
@@ -17,37 +17,56 @@ public class Camera2DFollow : MonoBehaviour {
 	Vector3 lookAheadPos;
 
 	float nextTimeToSearch = 0;
-	
-	// Use this for initialization
-	void Start () {
+
+    public bool bounds;
+
+    public Vector3 minCamPos;
+    public Vector3 maxCamPos;
+
+    // Use this for initialization
+    void Start () {         
+
         FindPlayers();
-		lastTargetPosition = AveragePosition();
+
+        if (target != null || target1 != null)
+        {
+            lastTargetPosition = AveragePosition();
+        }
 		//offsetZ = (transform.position - ((target.position + target1.position) / 2)).z;
 		transform.parent = null;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        
-        // only update lookahead pos if accelerating or changed direction
-        float xMoveDelta = (AveragePosition() - lastTargetPosition).x;
+        if (target != null || target1 != null)
+        {
+            // only update lookahead pos if accelerating or changed direction
+            float xMoveDelta = (AveragePosition() - lastTargetPosition).x;
 
-	    bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > lookAheadMoveThreshold;
+            bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > lookAheadMoveThreshold;
 
-		if (updateLookAheadTarget) {
-			lookAheadPos = lookAheadFactor * Vector3.right * Mathf.Sign(xMoveDelta);
-		} else {
-			lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, Time.deltaTime * lookAheadReturnSpeed);	
-		}
+            if (updateLookAheadTarget)
+            {
+                lookAheadPos = lookAheadFactor * Vector3.right * Mathf.Sign(xMoveDelta);
+            }
+            else
+            {
+                lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, Time.deltaTime * lookAheadReturnSpeed);
+            }
 
-        Vector3 aheadTargetPos = AveragePosition() + lookAheadPos + Vector3.forward;// * offsetZ;
-		Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
+            Vector3 aheadTargetPos = AveragePosition() + lookAheadPos + Vector3.forward;// * offsetZ;
+            Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
 
-		newPos = new Vector3 (newPos.x, Mathf.Clamp (newPos.y, yPosRestriction, Mathf.Infinity), -1);
+            newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, yPosRestriction, Mathf.Infinity), -1);
 
-		transform.position = newPos;
-		
-		lastTargetPosition = AveragePosition();		
+            newPos = new Vector3(Mathf.Clamp(newPos.x, minCamPos.x, maxCamPos.x),
+                Mathf.Clamp(newPos.y, minCamPos.y, maxCamPos.y),
+                newPos.z);
+
+            transform.position = newPos;
+
+            lastTargetPosition = AveragePosition();
+        }	
 	}
 
 	void FindPlayers () {
