@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: d9c93872111ac3c4887017672b5a9530
-timeCreated: 1484687961
+guid: 6712e64759569cb44ac5c8e34bcbe70c
+timeCreated: 1485025536
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -45,9 +45,9 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.61046386, y: 0.4381467}
-  spriteBorder: {x: 0, y: 143, z: 621, w: 170}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -60,10 +60,10 @@ TextureImporter:
       name: charakter-idle_boy_0
       rect:
         serializedVersion: 2
-        x: 66
-        y: 145
-        width: 124
-        height: 279
+        x: 134
+        y: 191
+        width: 105
+        height: 234
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -73,10 +73,10 @@ TextureImporter:
       name: charakter-idle_boy_1
       rect:
         serializedVersion: 2
-        x: 260
-        y: 145
-        width: 124
-        height: 282
+        x: 298
+        y: 191
+        width: 104
+        height: 237
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -86,10 +86,10 @@ TextureImporter:
       name: charakter-idle_boy_2
       rect:
         serializedVersion: 2
-        x: 468
-        y: 147
-        width: 123
-        height: 275
+        x: 473
+        y: 192
+        width: 103
+        height: 232
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -99,10 +99,10 @@ TextureImporter:
       name: charakter-idle_boy_3
       rect:
         serializedVersion: 2
-        x: 661
-        y: 147
-        width: 123
-        height: 279
+        x: 634
+        y: 192
+        width: 104
+        height: 235
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

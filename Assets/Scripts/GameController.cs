@@ -13,8 +13,8 @@ public class GameController : MonoBehaviour {
     public int AmountOfPlayers;
     public string NickName;
 
-    private int Char1Model;
-    private int Char2Model;
+    private int Char1Model = 0;
+    private int Char2Model = 0;
 
     public static GameController Instance
     {
@@ -43,8 +43,9 @@ public class GameController : MonoBehaviour {
 
         set
         {
-            if (Char1Model == 1 || Char1Model == 2)
+            if (Char1Model == 0 || Char1Model == 1)
             {
+                Debug.Log("Char1Model set to: " + value);
                 Char1Model = value;
             }else
             {
@@ -62,8 +63,9 @@ public class GameController : MonoBehaviour {
 
         set
         {
-            if (Char2Model == 1 || Char2Model == 2)
+            if (Char2Model == 0 || Char2Model == 1)
             {
+                Debug.Log("Char2Model set to: " + value);
                 Char2Model = value;
             }
             else
@@ -96,7 +98,7 @@ public class GameController : MonoBehaviour {
         // ID = 1 means level started.
         foreach (MonoBehaviour _script in eventsSubscribedScripts)
         {
-            _script.Invoke("gameEventUpdated", gameEventID);
+            _script.Invoke("gameEventUpdated", 0);
         }
     }
 
