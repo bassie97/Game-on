@@ -13,6 +13,9 @@ public class GameController : MonoBehaviour {
     public int AmountOfPlayers;
     public string NickName;
 
+    private int Char1Model;
+    private int Char2Model;
+
     public static GameController Instance
     {
         get
@@ -28,6 +31,45 @@ public class GameController : MonoBehaviour {
 #endif
             }
             return instance;
+        }
+    }
+
+    public int Char1Model1
+    {
+        get
+        {
+            return Char1Model;
+        }
+
+        set
+        {
+            if (Char1Model == 1 || Char1Model == 2)
+            {
+                Char1Model = value;
+            }else
+            {
+                Debug.LogError("Model " + Char1Model + " does not exist");
+            }
+        }
+    }
+
+    public int Char2Model1
+    {
+        get
+        {
+            return Char2Model;
+        }
+
+        set
+        {
+            if (Char2Model == 1 || Char2Model == 2)
+            {
+                Char2Model = value;
+            }
+            else
+            {
+                Debug.LogError("Model " + Char2Model + " does not exist");
+            }
         }
     }
 
