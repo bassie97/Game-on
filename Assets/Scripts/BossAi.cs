@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Pathfinding;
-
+using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Seeker))]
@@ -11,7 +11,11 @@ public class BossAi : MonoBehaviour
     //What to chase
     public Transform target;
 
+    [SerializeField]
+    GameObject enemyPrefab;
+
     //Path update rate per second
+    private bool shouldSpawn = false; 
     public float updateRate = 2f;
     private bool m_FacingRight = true;
     private Seeker seeker;
@@ -22,25 +26,16 @@ public class BossAi : MonoBehaviour
     //The calculated path
     public Path path;
 
-    [SerializeField]
-    public GameObject spawnPrefab;
-
-    //Boss specific stats
-    private static int maxClones = 7;
-    public GameObject[] clones = new GameObject[maxClones];
-    private int cloneCount = 0;
-    private float hpTrig;
-
     //Ai speed
     public float speed = 300f;
     public ForceMode2D fMode;
 
-    //For holding the boss room edge values
+    //Obstacles info
     private float rBorder;
     private float lBorder;
 
     //Health
-    public int health = 1000;
+    public int health = 100;
     [HideInInspector]
     public bool pathIsEnded = false;
     public bool hit = false;
@@ -51,34 +46,30 @@ public class BossAi : MonoBehaviour
     private int currentWayPoint = 0;
     void Start()
     {
+
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         m_Anim = GetComponent<Animator>();
         m_Anim.SetBool("Ground", true);
         m_Anim.SetFloat("vSpeed", rb.velocity.y);
         m_Anim.SetFloat("Speed", rb.velocity.y);
-        rb.gravityScale = 0;
-        rb.angularDrag = 0;
-        hpTrig = health - 200;
-        if (target == null)
-        {
-            Debug.LogError("NO player found");
-            return;
-        }
-       
         rb.AddForce(-move * 50);
         StartCoroutine(UpdatePath());
     }
 
     IEnumerator UpdatePath()
     {
-        if (target == null)
+        try
         {
-            //TODO: Insert a playersearch
-            Debug.LogError("Target(player) not found.");
-            yield break;
+            target = GameObject.FindWithTag("Player").transform;
+            seeker.StartPath(transform.position, target.position, OnPathComplete);
+            Debug.Log("Enemy location:" + transform.position + "target location:" + target.position);
         }
-        seeker.StartPath(transform.position, target.position, OnPathComplete);
+        catch (NullReferenceException ex)
+        {
+            Debug.Log(ex);
+        }
+
         yield return new WaitForSeconds(1f / updateRate);
         StartCoroutine(UpdatePath());
     }
@@ -92,6 +83,19 @@ public class BossAi : MonoBehaviour
             if (health <= 0)
             {
                 Destroy(this.gameObject);
+            }
+        }
+        if (other.CompareTag("Obstacle"))
+        {
+            rb.velocity = Vector2.zero;
+            Flip();
+            if (m_FacingRight && rBorder == 0)
+            {
+                rBorder = other.transform.position.x;
+            }
+            if (!m_FacingRight && lBorder == 0)
+            {
+                lBorder = other.transform.position.x;
             }
         }
     }
@@ -108,55 +112,25 @@ public class BossAi : MonoBehaviour
     {
         m_Anim.SetFloat("vSpeed", rb.velocity.y);
         m_Anim.SetFloat("Speed", Mathf.Abs(transform.InverseTransformDirection(rb.velocity).x));
-
+       
     }
     void FixedUpdate()
     {
-        if(cloneCount > 0)
-        {
-            cCluster();
-        }
-        if (health < hpTrig && cloneCount < maxClones && this.CompareTag("Boss"))
-        {
-            Debug.Log("Lengte van array: " + clones.Length + "Inst cond status: " + (clones.Length < maxClones));
-
-            if (isEmpty(clones))
-            {
-                // Vector3 temp = this.transform.position;
-                //temp.x = temp.x + 1f;
-                GameObject clone = Instantiate(spawnPrefab);
-                clone.gameObject.tag = "clone";
-                clone.transform.localScale -= new Vector3(0.2f, 0.2f, 0);
-                clones[cloneCount] = clone;
-                cloneCount++;
-                if (hpTrig > 200){
-                hpTrig -= 200;
-                }   
-                for (int i = 0; i < clones.Length; i++)
-                {
-                    clones[i].transform.localScale = clone.transform.localScale;
-                }
-
-                Debug.Log(cloneCount < maxClones);
-            }
-        }
-        if (target == null)
-        {
-            return;
-        }
         //TODO: Always look at player
         if (path == null)
         {
             return;
         }
+        Spawn();
         Debug.Log("Enemy velocity: " + rb.velocity);
         if ((target.transform.position.x > lBorder && (Mathf.Abs(target.transform.position.x) < rBorder && rBorder > lBorder)))
         {
-            if (rb.velocity.x < 0 && !m_FacingRight)
+            
+            if (rb.velocity.x < 0f && !m_FacingRight)
             {
                 Flip();
             }
-            else if (rb.velocity.x > 0 && m_FacingRight)
+            else if (rb.velocity.x > 0f && m_FacingRight)
             {
                 Flip();
             }
@@ -174,6 +148,7 @@ public class BossAi : MonoBehaviour
 
             //Find direction to next waypoint
             Vector3 dir = (path.vectorPath[currentWayPoint] - transform.position).normalized;
+            Debug.Log("wtf is dir?:" + dir);
             dir *= speed * Time.fixedDeltaTime;
 
             //Move the AI
@@ -183,6 +158,18 @@ public class BossAi : MonoBehaviour
             {
                 currentWayPoint++;
                 return;
+            }
+        }
+        else
+        {
+            if (m_FacingRight && Mathf.Abs(transform.InverseTransformDirection(rb.velocity).x) < 5f)
+            {
+                Debug.Log(!hit && m_FacingRight);
+                rb.AddForce(-move * 1f);
+            }
+            if (!m_FacingRight && Mathf.Abs(transform.InverseTransformDirection(rb.velocity).x) < 5f)
+            {
+                rb.AddForce(move * 1f);
             }
         }
     }
@@ -196,38 +183,19 @@ public class BossAi : MonoBehaviour
         theScale.x *= -1;
         transform.localScale = theScale;
     }
-
-    private bool isEmpty(GameObject[] check)
+    private void Spawn()
     {
-        GameObject[] temp = check;
-        if (temp[maxClones - 1] == null)
+        if (health <= 500 && !shouldSpawn)
         {
-            return true;
-        }
-        else
-            /*for(int i = 0; i < temp.Length; i++)
+            Vector3 temp = transform.position;
+            temp -= new Vector3(-2f, 0, 0);
+            for (int i = 0; i < 4; i++)
             {
-                if (i == temp.Length - 1 && temp[i] == null)
-                {
-                    return true;
-                }
-            }*/
-            return false;
-    }
-    private void cCluster()
-    {
-        for (int i = 0; i < clones.Length; i++)
-        {
-            if (clones[i] != null)
-            {
-                Vector3 offset = this.transform.position - clones[i].transform.position;
-                Vector3 temp = -offset;
-                offset.z = 0;
-                float magsqr = offset.sqrMagnitude;
-                if (magsqr > 0.0001f)
-                    clones[i].GetComponent<Rigidbody2D>().AddForce(2f * offset.normalized / magsqr);
+            GameObject something = (GameObject) Instantiate(enemyPrefab, temp, Quaternion.identity);
+                something.GetComponent<EnemyAI>().minnion = true;
+                something.transform.localScale -= new Vector3(1.5f, 1.5f, 0);
             }
+            shouldSpawn = true;
         }
     }
-
 }

@@ -13,6 +13,7 @@ namespace UnityStandardAssets._2D
 		[SerializeField] private int score = 0;
 		[SerializeField] private GameObject ammoPrefab;
 
+        private bool invincible = false;
         public int ammoCount = 10;
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
@@ -78,6 +79,15 @@ namespace UnityStandardAssets._2D
 				score = score + 5;
 				Destroy (other.gameObject);
 			}
+            if (!invincible)
+            {
+                if (other.CompareTag("Enemy"))
+                {
+                    curHealth -= 1;
+                    invincible = true;
+                    Invoke("resetInvunerability", 3);
+                }
+            }
 		}
 
 		private void Update(){
@@ -88,12 +98,15 @@ namespace UnityStandardAssets._2D
             {
                 m_Rigidbody2D.gravityScale = gravityStore;
             }
+            if(transform.position.y < -5)
+            {
+                Die();
+            }
         }
 
         private void FixedUpdate()
         {
             m_Grounded = false;
-
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             // This can be done using layers instead but Sample Assets will not overwrite your project settings.
             Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
@@ -120,7 +133,6 @@ namespace UnityStandardAssets._2D
 
         public void Move(float move , bool jump)
         {
-           
             //only control the player if grounded or airControl is turned on
             if (m_Grounded || m_AirControl)
             {
@@ -154,8 +166,6 @@ namespace UnityStandardAssets._2D
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             }
         }
-
-
         private void Flip()
         {
             // Switch the way the player is labelled as facing.
@@ -166,26 +176,13 @@ namespace UnityStandardAssets._2D
             theScale.x *= -1;
             transform.localScale = theScale;
         }
-
-        /*
-        void throwAmmo()
-        {
-            ammoCount--;
-            if (m_FacingRight)
-            {
-                GameObject tmp = (GameObject)Instantiate(ammoPrefab, firePoint.position, Quaternion.Euler(-firePoint.position.x, -firePoint.position.y, -60));
-                tmp.GetComponent<Ammo>().Initialize(firePoint.right);
-            }
-            else
-            {
-                GameObject tmp = (GameObject)Instantiate(ammoPrefab, firePoint.position, Quaternion.Euler(firePoint.position.x, firePoint.position.y, 60));
-                tmp.GetComponent<Ammo>().Initialize(-firePoint.right);
-            }
-        }
-        */
     void Die()
         {
             Application.LoadLevel(Application.loadedLevel);
+        }
+    void resetInvulnerability()
+        {
+            invincible = false;
         }
     }
 }
