@@ -1,23 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LoadInformation : MonoBehaviour {
     public Text playerName;
     string naam;
-    void Start () {
-        naam = PlayerPrefs.GetString("PlayerName"+PlayerProgressHolder.Instance.playerID);
+    public int PlayerID;
+
+    void Awake()
+    {
+        naam = PlayerPrefs.GetString("PlayerName" + LoadPlayers.Instance.counter);
         playerName = GetComponent<Text>();
         playerName.text = naam;
+        PlayerID = LoadPlayers.Instance.counter;
     }
-	
-	// Update is called once per frame
-	void Update () {
-	    
-	}
-
-    public void sendData()
+    
+    public void LoadUser(int playerID)
     {
-        PlayerProgressHolder.Instance.LoadName(naam);
+        PlayerID = playerID;
+        //GameController.Instance.NickName = PlayerPrefs.GetString("PlayerName" + 1);
+        //PlayerProgressHolder.Instance.playerName = GameController.Instance.NickName;
+    }
+    public void ChangeToScene(int sceneToChangeTo)
+    {
+        SceneManager.LoadScene(sceneToChangeTo);
     }
 }
