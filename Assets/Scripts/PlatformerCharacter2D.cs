@@ -115,7 +115,7 @@ namespace UnityStandardAssets._2D
                 if (colliders[i].gameObject != gameObject)
                     m_Grounded = true;
             }
-            m_Anim.SetBool("Ground", m_Grounded);
+            m_Anim.SetBool("test", m_Grounded);
 
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
@@ -157,12 +157,12 @@ namespace UnityStandardAssets._2D
             }
 
             // If the player should jump...
-            if (m_Grounded && jump && m_Anim.GetBool("Ground"))
+            if (m_Grounded && jump && m_Anim.GetBool("test"))
             {
                 
                 // Add a vertical force to the player.
                 m_Grounded = false;
-                m_Anim.SetBool("Ground", false);
+                m_Anim.SetBool("test", false);
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             }
         }

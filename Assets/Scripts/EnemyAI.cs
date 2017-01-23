@@ -42,7 +42,7 @@ public class EnemyAI : MonoBehaviour
     private int currentWayPoint = 0;
     void Start()
     {
-
+        Physics.IgnoreLayerCollision(9, 10);
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         m_Anim = GetComponent<Animator>();
@@ -141,7 +141,8 @@ public class EnemyAI : MonoBehaviour
             dir *= speed * Time.fixedDeltaTime;
 
             //Move the AI
-            rb.AddForce(dir, fMode);
+            //rb.AddForce(dir, fMode);
+            rb.AddForce(dir);
             float dist = Vector3.Distance(transform.position, path.vectorPath[currentWayPoint]);
             if (dist < nextWaypointDistance)
             {
