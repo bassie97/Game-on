@@ -30,12 +30,14 @@ public class BossAi : MonoBehaviour
     public float speed = 150f;
     public ForceMode2D fMode;
 
+
     //Obstacles info
     private float rBorder;
     private float lBorder;
 
     //Health
     public int health = 100;
+    int orgHp = 0;
     [HideInInspector]
     public bool pathIsEnded = false;
     public bool hit = false;
@@ -124,7 +126,7 @@ public class BossAi : MonoBehaviour
         Debug.Log("Enemy velocity: " + rb.velocity);
         // && (Mathf.Abs(target.transform.position.x) < rBorder && rBorder > lBorder)))
         GameObject temp = GameObject.FindWithTag("Door");
-        if (((target.transform.position.x + 4.42) > temp.transform.position.x))
+        if (((target.transform.position.x + 4.42/*(Compensation for Door object offset */) > temp.transform.position.x))
         {
             Debug.Log("Start the chase?");
             if (rb.velocity.x < 0f && !m_FacingRight)
@@ -173,8 +175,12 @@ public class BossAi : MonoBehaviour
         transform.localScale = theScale;
     }
     private void Spawn()
-    {
-        if (health <= 50 && !shouldSpawn)
+    { 
+        if(orgHp == 0)
+        {
+            orgHp = health;
+        }
+        if (health <= orgHp/2 && !shouldSpawn)
         {
             Vector3 temp = transform.position;
             temp -= new Vector3(-2f, 0, 0);
@@ -182,7 +188,7 @@ public class BossAi : MonoBehaviour
             {
             GameObject something = (GameObject) Instantiate(enemyPrefab, temp, Quaternion.identity);
                 something.GetComponent<EnemyAI>().minnion = true;
-                something.transform.localScale -= new Vector3(1.5f, 1.5f, 0);
+                something.transform.localScale -= new Vector3(1f, 1f, 0);
             }
             shouldSpawn = true;
         }
