@@ -65,7 +65,6 @@ public class EnemyAI : MonoBehaviour
         {
             Debug.Log(ex);
         }
-
         yield return new WaitForSeconds(1f / updateRate);
         StartCoroutine(UpdatePath());
     }
@@ -141,8 +140,7 @@ public class EnemyAI : MonoBehaviour
             dir *= speed * Time.fixedDeltaTime;
 
             //Move the AI
-            //rb.AddForce(dir, fMode);
-            rb.AddForce(dir);
+            rb.AddForce(dir, fMode);
             float dist = Vector3.Distance(transform.position, path.vectorPath[currentWayPoint]);
             if (dist < nextWaypointDistance)
             {
