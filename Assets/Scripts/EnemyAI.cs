@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using Pathfinding;
 using System.Collections;
-
-[RequireComponent (typeof (Rigidbody2D))]
-[RequireComponent (typeof (Seeker))]
+using System;
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Seeker))]
 [RequireComponent(typeof(Animator))]
-public class EnemyAI : MonoBehaviour {
+public class EnemyAI : MonoBehaviour
+{
     //What to chase
     public Transform target;
 
@@ -14,7 +15,7 @@ public class EnemyAI : MonoBehaviour {
     private bool m_FacingRight = true;
     private Seeker seeker;
     private Rigidbody2D rb;
-	private Animator m_Anim;
+    private Animator m_Anim;
     private Vector2 move = new Vector2(5f, 0f);
 
     //The calculated path
@@ -28,6 +29,7 @@ public class EnemyAI : MonoBehaviour {
     private float rBorder;
     private float lBorder;
 
+    public bool minnion = false;
     //Health
     public int health = 100;
     [HideInInspector]
@@ -40,32 +42,30 @@ public class EnemyAI : MonoBehaviour {
     private int currentWayPoint = 0;
     void Start()
     {
-        
+
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
-		m_Anim = GetComponent<Animator>();
-		m_Anim.SetBool("Ground", true);
+        m_Anim = GetComponent<Animator>();
+        m_Anim.SetBool("Ground", true);
         m_Anim.SetFloat("vSpeed", rb.velocity.y);
         m_Anim.SetFloat("Speed", rb.velocity.y);
         rb.AddForce(-move * 50);
-        if (target == null)
-        {
-            Debug.LogError("NO player found");
-            return;
-        }
-        
         StartCoroutine(UpdatePath());
     }
 
     IEnumerator UpdatePath()
     {
-        if(target == null)
+        try
         {
-            //TODO: Insert a playersearch
-            
-            yield break;
+            target = GameObject.FindWithTag("Player").transform;
+            seeker.StartPath(transform.position, target.position, OnPathComplete);
+            Debug.Log("Enemy location:" + transform.position + "target location:" + target.position);
         }
-        seeker.StartPath(transform.position, target.position, OnPathComplete);
+        catch (NullReferenceException ex)
+        {
+            Debug.Log(ex);
+        }
+
         yield return new WaitForSeconds(1f / updateRate);
         StartCoroutine(UpdatePath());
     }
@@ -76,7 +76,7 @@ public class EnemyAI : MonoBehaviour {
             int temp = other.GetComponent<Ammo>().damage;
             Destroy(other.gameObject);
             health -= temp;
-            if(health <= 0)
+            if (health <= 0)
             {
                 Destroy(this.gameObject);
             }
@@ -97,7 +97,7 @@ public class EnemyAI : MonoBehaviour {
     }
     public void OnPathComplete(Path p)
     {
-        Debug.Log("We got a path, did it have an error?"+ p.error);
+        Debug.Log("We got a path, did it have an error?" + p.error);
         if (!p.error)
         {
             path = p;
@@ -112,24 +112,14 @@ public class EnemyAI : MonoBehaviour {
     }
     void FixedUpdate()
     {
-        if (target == null)
-        {
-            target = GameObject.FindWithTag("Player").transform;
-            return;
-        }
-        //TODO: Always look at player
-        if (path == null)
-        {
-            return;
-        }
         Debug.Log("Enemy velocity: " + rb.velocity);
-        if ((target.transform.position.x > lBorder && (Mathf.Abs(target.transform.position.x) < rBorder && rBorder > lBorder)))
+        if ((target.transform.position.x > lBorder && (Mathf.Abs(target.transform.position.x) < rBorder && rBorder > lBorder)) || (minnion))
         {
-            if(rb.velocity.x < 0 && !m_FacingRight)
+            if (rb.velocity.x < 0f && !m_FacingRight)
             {
                 Flip();
             }
-            else if (rb.velocity.x > 0 && m_FacingRight)
+            else if (rb.velocity.x > 0f && m_FacingRight)
             {
                 Flip();
             }
@@ -147,6 +137,7 @@ public class EnemyAI : MonoBehaviour {
 
             //Find direction to next waypoint
             Vector3 dir = (path.vectorPath[currentWayPoint] - transform.position).normalized;
+            Debug.Log("wtf is dir?:" + dir);
             dir *= speed * Time.fixedDeltaTime;
 
             //Move the AI
