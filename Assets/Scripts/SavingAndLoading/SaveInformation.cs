@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SaveInformation : MonoBehaviour
 {
-    private int i;
+    private int i = 0;
     public void saveAllInformation(int playerID, int levelProgress)
     {        
         PlayerPrefs.SetInt("LevelProgress"+playerID, levelProgress);

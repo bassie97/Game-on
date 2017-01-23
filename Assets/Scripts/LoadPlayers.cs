@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
+using System;
 
 public class LoadPlayers : MonoBehaviour {
 
@@ -38,9 +40,8 @@ public class LoadPlayers : MonoBehaviour {
 
     void Start () {
         GameObject canvas = GameObject.FindGameObjectWithTag("LoadUser");
-
         if (PlayerPrefs.HasKey("PlayerID"+counter))
-        {
+        {            
             GameObject prefab = (GameObject)Instantiate(prefab1, new Vector3(-200, 250, 0), Quaternion.identity);
             prefab.transform.SetParent(canvas.transform, false);
         }
@@ -74,13 +75,5 @@ public class LoadPlayers : MonoBehaviour {
     public void ChangeToScene(int sceneToChangeTo)
     {
         SceneManager.LoadScene(sceneToChangeTo);
-    }
-
-    public void LoadUser()
-    {
-        //int i = prefab1.GetComponent<LoadInformation>().PlayerID;
-        PlayerProgressHolder.Instance.playerID = 1;
-        PlayerProgressHolder.Instance.playerName = "Gerbrand";
-        PlayerProgressHolder.Instance.levelProgress = 1;
     }
 }

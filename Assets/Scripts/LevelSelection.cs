@@ -22,8 +22,7 @@ public class LevelSelection : MonoBehaviour {
         {
             //SceneManager.LoadScene(sceneToLoad);
             GameObject canvas = GameObject.FindGameObjectWithTag("LevelSelection");
-            int level = PlayerPrefs.GetInt("LevelProgress"+PlayerProgressHolder.Instance.playerID);
-            
+            int level = PlayerProgressHolder.Instance.levelProgress;
             if (level >= 1)
             {
                 GameObject prefab = (GameObject)Instantiate(prefab1, new Vector3(-200, 0, 0), Quaternion.identity);
