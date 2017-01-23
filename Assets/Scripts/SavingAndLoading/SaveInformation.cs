@@ -25,6 +25,11 @@ public class SaveInformation : MonoBehaviour
 
     void Awake()
     {
+        if (FindObjectsOfType<SaveInformation>().Length > 1)
+        {
+            Debug.LogError("There is more than one game controller in the scene");
+            Destroy(gameObject);
+        }
         DontDestroyOnLoad(gameObject);
     }
 

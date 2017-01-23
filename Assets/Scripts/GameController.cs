@@ -34,6 +34,15 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    private void Awake()
+    {
+        if (FindObjectsOfType<GameController>().Length > 1)
+        {
+            Debug.LogError("There is more than one game controller in the scene");
+            Destroy(gameObject);
+        }
+    }
+
     public int Char1Model1
     {
         get

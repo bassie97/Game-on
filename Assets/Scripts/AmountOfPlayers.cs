@@ -19,7 +19,7 @@ public class AmountOfPlayers : MonoBehaviour {
             amount = value;
             GameController.Instance.AmountOfPlayers = amount;
             //go to next screen
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(3);
         }
     }
 
