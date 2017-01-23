@@ -81,7 +81,7 @@ namespace UnityStandardAssets._2D
 			}
             if (!invincible)
             {
-                if (other.CompareTag("Enemy"))
+                if (other.CompareTag("Enemy") || other.CompareTag("Boss"))
                 {
                     curHealth -= 1;
                     invincible = true;
