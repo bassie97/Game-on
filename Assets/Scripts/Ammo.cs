@@ -6,7 +6,7 @@ using System.Collections;
 public class Ammo : MonoBehaviour {
     public int damage = 30;
     public Vector3 direction;
-	public float speed = 100f;
+	public float speed = 5f;
 	private Rigidbody2D arigidBody;
 	private float timeTolive = 4f;
 	private float timeToStop = 3f;
@@ -18,8 +18,9 @@ public class Ammo : MonoBehaviour {
 	}
 
 	void Update(){
-        Debug.Log("Speed?"+arigidBody.velocity);
+        Debug.Log("timeeeeee: " + timeCount);
         timeCount += Time.deltaTime;
+        Debug.Log("timeeeeee: " + timeCount);
 
         if (timeCount > timeTolive)
 		{
@@ -28,12 +29,13 @@ public class Ammo : MonoBehaviour {
 	}
 
 	public void Initialize(Vector3 direction){
+        Debug.Log("moi");
         this.direction = direction;
 	}
 
 	void FixedUpdate(){
 		arigidBody.velocity = direction * speed;
-		//arigidBody.drag = arigidBody.drag + 2f;
+		arigidBody.drag = arigidBody.drag + 2f;
 		arigidBody.gravityScale = arigidBody.gravityScale + 0.2f;
 	}
 }
