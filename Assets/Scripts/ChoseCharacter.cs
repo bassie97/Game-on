@@ -34,7 +34,20 @@ public class ChoseCharacter : MonoBehaviour {
     public void NickName(string name)
     {
         GameController.Instance.NickName = name;
+        
     }
+
+    public void NewPlayer()
+    {
+        int singleplayer;
+        if (GameController.Instance.AmountOfPlayers == 1)
+        {
+            singleplayer = 1;
+        }
+        else { singleplayer = 0; }
+        PlayerProgressHolder.Instance.save.newPlayer(GameController.Instance.NickName, singleplayer);
+    }
+
 	
 	// Update is called once per frame
 	void Update () {

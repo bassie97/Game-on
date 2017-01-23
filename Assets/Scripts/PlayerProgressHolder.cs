@@ -27,7 +27,7 @@ public class PlayerProgressHolder : MonoBehaviour {
 #if UNITY_EDITOR
                 if (FindObjectsOfType<PlayerProgressHolder>().Length > 1)
                 {
-                    Debug.LogError("There is more than one game controller in the scene");
+                    Debug.LogError("There is more than one PlayerProgressHolder in the scene");
                 }
 #endif
             }
@@ -49,7 +49,10 @@ public class PlayerProgressHolder : MonoBehaviour {
             Debug.Log(scene.name);
             save.saveAllInformation(playerID, levelProgress);
         }
-        
+        if (playerName != "")
+        {
+            ProgressLoaded = true;
+        }        
     }
     void Awake()
     {
@@ -58,13 +61,6 @@ public class PlayerProgressHolder : MonoBehaviour {
 
     void Start()
     {
-        if (playerName !=null) {
-            ProgressLoaded = true;
-        }
-        if(GameController.Instance.AmountOfPlayers == 1)
-        {
-
-        }
     }
 
 
@@ -72,14 +68,5 @@ public class PlayerProgressHolder : MonoBehaviour {
     public void ChangeToScene(int sceneToChangeTo)
     {
         SceneManager.LoadScene(sceneToChangeTo);
-    }
-
-    public void LoadName(string playername)
-    {
-        playerName = playername;
-    }
-    public void LoadLevel(int levelprogress)
-    {
-        levelProgress = levelprogress;
     }
 }
