@@ -178,7 +178,7 @@ public class BossAi : MonoBehaviour
         {
             Vector3 temp = transform.position;
             temp -= new Vector3(-2f, 0, 0);
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++)
             {
             GameObject something = (GameObject) Instantiate(enemyPrefab, temp, Quaternion.identity);
                 something.GetComponent<EnemyAI>().minnion = true;
