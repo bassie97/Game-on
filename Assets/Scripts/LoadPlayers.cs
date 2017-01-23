@@ -42,31 +42,31 @@ public class LoadPlayers : MonoBehaviour {
         GameObject canvas = GameObject.FindGameObjectWithTag("LoadUser");
         if (PlayerPrefs.HasKey("PlayerID"+counter))
         {            
-            GameObject prefab = (GameObject)Instantiate(prefab1, new Vector3(-200, 250, 0), Quaternion.identity);
+            GameObject prefab = (GameObject)Instantiate(prefab1, new Vector3(-400, 250, 0), Quaternion.identity);
             prefab.transform.SetParent(canvas.transform, false);
         }
         counter++;
         if (PlayerPrefs.HasKey("PlayerID"+counter))
         {
-            GameObject prefab = (GameObject)Instantiate(prefab2, new Vector3(-200, 150, 0), Quaternion.identity);
+            GameObject prefab = (GameObject)Instantiate(prefab2, new Vector3(-400, 100, 0), Quaternion.identity);
             prefab.transform.SetParent(canvas.transform, false);
         }
         counter++;
         if (PlayerPrefs.HasKey("PlayerID" + counter))
         { 
-            GameObject prefab = (GameObject)Instantiate(prefab3, new Vector3(-200, 50, 0), Quaternion.identity);
+            GameObject prefab = (GameObject)Instantiate(prefab3, new Vector3(-400, -50, 0), Quaternion.identity);
             prefab.transform.SetParent(canvas.transform, false);
         }
         counter++;
         if (PlayerPrefs.HasKey("PlayerID" + counter))
         {
-            GameObject prefab = (GameObject)Instantiate(prefab4, new Vector3(-200, -50, 0), Quaternion.identity);
+            GameObject prefab = (GameObject)Instantiate(prefab4, new Vector3(-400, -200, 0), Quaternion.identity);
             prefab.transform.SetParent(canvas.transform, false);
         }
         counter++;
         if (PlayerPrefs.HasKey("PlayerID" + counter))
         {
-            GameObject prefab = (GameObject)Instantiate(prefab5, new Vector3(-200, -150, 0), Quaternion.identity);
+            GameObject prefab = (GameObject)Instantiate(prefab5, new Vector3(-400, -350, 0), Quaternion.identity);
             prefab.transform.SetParent(canvas.transform, false);
         }
     }
