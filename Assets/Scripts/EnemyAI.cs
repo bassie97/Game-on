@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Pathfinding;
 using System.Collections;
-using System;
+
 [RequireComponent (typeof (Rigidbody2D))]
 [RequireComponent (typeof (Seeker))]
 [RequireComponent(typeof(Animator))]
@@ -48,22 +48,24 @@ public class EnemyAI : MonoBehaviour {
         m_Anim.SetFloat("vSpeed", rb.velocity.y);
         m_Anim.SetFloat("Speed", rb.velocity.y);
         rb.AddForce(-move * 50);
+        if (target == null)
+        {
+            Debug.LogError("NO player found");
+            return;
+        }
+        
         StartCoroutine(UpdatePath());
     }
 
     IEnumerator UpdatePath()
     {
-        try
+        if(target == null)
         {
-            target = GameObject.FindWithTag("Player").transform;
-            seeker.StartPath(transform.position, target.position, OnPathComplete);
-            Debug.Log("Enemy location:" + transform.position + "target location:" + target.position);
+            //TODO: Insert a playersearch
+            
+            yield break;
         }
-        catch (NullReferenceException ex)
-        {
-            Debug.Log(ex);
-        }
-
+        seeker.StartPath(transform.position, target.position, OnPathComplete);
         yield return new WaitForSeconds(1f / updateRate);
         StartCoroutine(UpdatePath());
     }
@@ -110,6 +112,11 @@ public class EnemyAI : MonoBehaviour {
     }
     void FixedUpdate()
     {
+        if (target == null)
+        {
+            target = GameObject.FindWithTag("Player").transform;
+            return;
+        }
         //TODO: Always look at player
         if (path == null)
         {
@@ -118,11 +125,11 @@ public class EnemyAI : MonoBehaviour {
         Debug.Log("Enemy velocity: " + rb.velocity);
         if ((target.transform.position.x > lBorder && (Mathf.Abs(target.transform.position.x) < rBorder && rBorder > lBorder)))
         {
-            if(rb.velocity.x < 0f && !m_FacingRight)
+            if(rb.velocity.x < 0 && !m_FacingRight)
             {
                 Flip();
             }
-            else if (rb.velocity.x > 0f && m_FacingRight)
+            else if (rb.velocity.x > 0 && m_FacingRight)
             {
                 Flip();
             }
@@ -140,7 +147,6 @@ public class EnemyAI : MonoBehaviour {
 
             //Find direction to next waypoint
             Vector3 dir = (path.vectorPath[currentWayPoint] - transform.position).normalized;
-            Debug.Log("wtf is dir?:" + dir);
             dir *= speed * Time.fixedDeltaTime;
 
             //Move the AI

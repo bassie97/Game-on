@@ -75,7 +75,7 @@ namespace UnityStandardAssets._2D
         }
 
         private void OnTriggerEnter2D(Collider2D other){
-			if(other.CompareTag("PickUp")){
+			if(other.CompareTag("AmmoObject")){
 				ammoCount = ammoCount + 1;
 				Destroy (other.gameObject);
 			}

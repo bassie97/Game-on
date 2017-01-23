@@ -66,17 +66,13 @@ namespace UnityStandardAssets._2D
         {
             if (player.m_FacingRight)
             {
-                ammoPrefab.GetComponent<Ammo>().direction = player.firePoint.right;
                 GameObject tmp = (GameObject)Instantiate(ammoPrefab, player.firePoint.position, Quaternion.Euler(-player.firePoint.position.x, -player.firePoint.position.y, -60));
-                tmp.tag = "AmmoObject";
-                //tmp.GetComponent<Ammo>().Initialize(player.firePoint.right);
+                tmp.GetComponent<Ammo>().Initialize(player.firePoint.right);
             }
             else
             {
-                ammoPrefab.GetComponent<Ammo>().direction = -player.firePoint.right;
                 GameObject tmp = (GameObject)Instantiate(ammoPrefab, player.firePoint.position, Quaternion.Euler(player.firePoint.position.x, player.firePoint.position.y, 60));
-                tmp.tag = "AmmoObject";
-                //tmp.GetComponent<Ammo>().Initialize(-player.firePoint.right);
+                tmp.GetComponent<Ammo>().Initialize(-player.firePoint.right);
             }
         }
 
