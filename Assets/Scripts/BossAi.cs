@@ -174,7 +174,7 @@ public class BossAi : MonoBehaviour
     }
     private void Spawn()
     {
-        if (health <= 500 && !shouldSpawn)
+        if (health <= 50 && !shouldSpawn)
         {
             Vector3 temp = transform.position;
             temp -= new Vector3(-2f, 0, 0);
