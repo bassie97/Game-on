@@ -3,6 +3,7 @@ using System.Collections;
 
 public class SaveInformation : MonoBehaviour
 {
+    private int i = 0;
     public void saveAllInformation(int playerID, int levelProgress)
     {        
         PlayerPrefs.SetInt("LevelProgress"+playerID, levelProgress);
@@ -10,11 +11,16 @@ public class SaveInformation : MonoBehaviour
 
     public void newPlayer(string playerName, int singleplayer)
     {
-        int id = NewPlayerID();
-        PlayerPrefs.SetInt("PlayerID" + id, id);
-        PlayerPrefs.SetInt("LevelProgress" + id, 0);
-        PlayerPrefs.SetString("PlayerName" + id, playerName);
-        PlayerPrefs.SetInt("Singleplayer" + id, singleplayer);
+        int id = NewPlayerID(i);
+        Debug.Log("id: "+id);
+        if (PlayerPrefs.HasKey("PlayerID" + id) == false) {
+
+            PlayerPrefs.SetInt("PlayerID" + id, id);
+            PlayerPrefs.SetInt("LevelProgress" + id, 0);
+            PlayerPrefs.SetString("PlayerName" + id, playerName);
+            PlayerPrefs.SetInt("Singleplayer" + id, singleplayer);
+            //PlayerPrefs.SetInt("HighscoreLevel1PlayerID" + id, highscoreLevel1PlayerID);
+        }
     }
 
     void Awake()
@@ -22,15 +28,15 @@ public class SaveInformation : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    static int NewPlayerID()
+    static int NewPlayerID(int i)
     {
-        int i =0;
-        if (PlayerPrefs.HasKey("PlayerID" + i))
+        int j;
+        for (j=0; PlayerPrefs.HasKey("PlayerID" + j) == true; j++)
         {
-            i++;
-            NewPlayerID();
+            //nothing
         }
-        else {  }
-        return i;
+        Debug.Log(j);
+        return j;
     }
 }
+

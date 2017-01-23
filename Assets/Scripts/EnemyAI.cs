@@ -42,7 +42,7 @@ public class EnemyAI : MonoBehaviour
     private int currentWayPoint = 0;
     void Start()
     {
-
+        Physics.IgnoreLayerCollision(9, 10);
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         m_Anim = GetComponent<Animator>();
@@ -65,7 +65,6 @@ public class EnemyAI : MonoBehaviour
         {
             Debug.Log(ex);
         }
-
         yield return new WaitForSeconds(1f / updateRate);
         StartCoroutine(UpdatePath());
     }
