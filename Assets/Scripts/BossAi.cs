@@ -1,16 +1,21 @@
 ﻿using UnityEngine;
-using Pathfinding;
 using System.Collections;
+using Pathfinding;
 using System;
+
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Seeker))]
 [RequireComponent(typeof(Animator))]
-public class EnemyAI : MonoBehaviour
+public class BossAi : MonoBehaviour
 {
     //What to chase
     public Transform target;
 
+    [SerializeField]
+    GameObject enemyPrefab;
+
     //Path update rate per second
+    private bool shouldSpawn = false; 
     public float updateRate = 2f;
     private bool m_FacingRight = true;
     private Seeker seeker;
@@ -29,7 +34,6 @@ public class EnemyAI : MonoBehaviour
     private float rBorder;
     private float lBorder;
 
-    public bool minnion = false;
     //Health
     public int health = 100;
     [HideInInspector]
@@ -108,13 +112,20 @@ public class EnemyAI : MonoBehaviour
     {
         m_Anim.SetFloat("vSpeed", rb.velocity.y);
         m_Anim.SetFloat("Speed", Mathf.Abs(transform.InverseTransformDirection(rb.velocity).x));
-
+       
     }
     void FixedUpdate()
     {
-        Debug.Log("Enemy velocity: " + rb.velocity);
-        if ((target.transform.position.x > lBorder && (Mathf.Abs(target.transform.position.x) < rBorder && rBorder > lBorder)) || (minnion))
+        //TODO: Always look at player
+        if (path == null)
         {
+            return;
+        }
+        Spawn();
+        Debug.Log("Enemy velocity: " + rb.velocity);
+        if ((target.transform.position.x > lBorder && (Mathf.Abs(target.transform.position.x) < rBorder && rBorder > lBorder)))
+        {
+            
             if (rb.velocity.x < 0f && !m_FacingRight)
             {
                 Flip();
@@ -172,5 +183,19 @@ public class EnemyAI : MonoBehaviour
         theScale.x *= -1;
         transform.localScale = theScale;
     }
+    private void Spawn()
+    {
+        if (health <= 500 && !shouldSpawn)
+        {
+            Vector3 temp = transform.position;
+            temp -= new Vector3(-2f, 0, 0);
+            for (int i = 0; i < 4; i++)
+            {
+            GameObject something = (GameObject) Instantiate(enemyPrefab, temp, Quaternion.identity);
+                something.GetComponent<EnemyAI>().minnion = true;
+                something.transform.localScale -= new Vector3(1.5f, 1.5f, 0);
+            }
+            shouldSpawn = true;
+        }
+    }
 }
-

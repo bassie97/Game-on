@@ -13,6 +13,7 @@ namespace UnityStandardAssets._2D
 		[SerializeField] private int score = 0;
 		[SerializeField] private GameObject ammoPrefab;
 
+        private bool invincible = false;
         public int ammoCount = 10;
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
@@ -45,16 +46,15 @@ namespace UnityStandardAssets._2D
             firePoint = transform.Find("FirePoint");
             m_GroundCheck = transform.Find("GroundCheck");
             m_Anim = GetComponent<Animator>();
-            this.gameObject.SetActive(false);
-            this.gameObject.SetActive(true);
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
             m_Rigidbody2D.gravityScale = 0.5f;
             gravityStore = m_Rigidbody2D.gravityScale;
             curHealth = maxhealth;
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
+            Debug.Log(this);
             if(GameController.Instance != null)
             {
                 GameController.Instance.deSubscribeScriptToGameEventUpdates(this);
@@ -75,10 +75,19 @@ namespace UnityStandardAssets._2D
         }
 
         private void OnTriggerEnter2D(Collider2D other){
-			if(other.CompareTag("AmmoObject")){
-				ammoCount = ammoCount + 1;
+			if(other.CompareTag("PickUp")){
+				score = score + 5;
 				Destroy (other.gameObject);
 			}
+            if (!invincible)
+            {
+                if (other.CompareTag("Enemy"))
+                {
+                    curHealth -= 1;
+                    invincible = true;
+                    Invoke("resetInvunerability", 3);
+                }
+            }
 		}
 
 		private void Update(){
@@ -89,29 +98,24 @@ namespace UnityStandardAssets._2D
             {
                 m_Rigidbody2D.gravityScale = gravityStore;
             }
-            /*
-            if (this.transform.position.y <= -4)
+            if(transform.position.y < -5)
             {
                 Die();
             }
-            */
         }
 
         private void FixedUpdate()
         {
             m_Grounded = false;
-
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             // This can be done using layers instead but Sample Assets will not overwrite your project settings.
             Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
             for (int i = 0; i < colliders.Length; i++)
             {
                 if (colliders[i].gameObject != gameObject)
-                {
                     m_Grounded = true;
-                }
             }
-            m_Anim.SetBool("test", m_Grounded);
+            m_Anim.SetBool("Ground", m_Grounded);
 
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
@@ -129,7 +133,6 @@ namespace UnityStandardAssets._2D
 
         public void Move(float move , bool jump)
         {
-           
             //only control the player if grounded or airControl is turned on
             if (m_Grounded || m_AirControl)
             {
@@ -154,17 +157,15 @@ namespace UnityStandardAssets._2D
             }
 
             // If the player should jump...
-            if (m_Grounded && jump && m_Anim.GetBool("test"))
+            if (m_Grounded && jump && m_Anim.GetBool("Ground"))
             {
                 
                 // Add a vertical force to the player.
                 m_Grounded = false;
-                m_Anim.SetBool("test", false);
+                m_Anim.SetBool("Ground", false);
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             }
         }
-
-
         private void Flip()
         {
             // Switch the way the player is labelled as facing.
@@ -175,26 +176,13 @@ namespace UnityStandardAssets._2D
             theScale.x *= -1;
             transform.localScale = theScale;
         }
-
-        /*
-        void throwAmmo()
-        {
-            ammoCount--;
-            if (m_FacingRight)
-            {
-                GameObject tmp = (GameObject)Instantiate(ammoPrefab, firePoint.position, Quaternion.Euler(-firePoint.position.x, -firePoint.position.y, -60));
-                tmp.GetComponent<Ammo>().Initialize(firePoint.right);
-            }
-            else
-            {
-                GameObject tmp = (GameObject)Instantiate(ammoPrefab, firePoint.position, Quaternion.Euler(firePoint.position.x, firePoint.position.y, 60));
-                tmp.GetComponent<Ammo>().Initialize(-firePoint.right);
-            }
-        }
-        */
     void Die()
         {
             Application.LoadLevel(Application.loadedLevel);
+        }
+    void resetInvulnerability()
+        {
+            invincible = false;
         }
     }
 }
