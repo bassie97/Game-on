@@ -45,15 +45,16 @@ namespace UnityStandardAssets._2D
             firePoint = transform.Find("FirePoint");
             m_GroundCheck = transform.Find("GroundCheck");
             m_Anim = GetComponent<Animator>();
+            this.gameObject.SetActive(false);
+            this.gameObject.SetActive(true);
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
             m_Rigidbody2D.gravityScale = 0.5f;
             gravityStore = m_Rigidbody2D.gravityScale;
             curHealth = maxhealth;
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
-            Debug.Log(this);
             if(GameController.Instance != null)
             {
                 GameController.Instance.deSubscribeScriptToGameEventUpdates(this);
@@ -88,6 +89,12 @@ namespace UnityStandardAssets._2D
             {
                 m_Rigidbody2D.gravityScale = gravityStore;
             }
+            /*
+            if (this.transform.position.y <= -4)
+            {
+                Die();
+            }
+            */
         }
 
         private void FixedUpdate()
@@ -102,7 +109,6 @@ namespace UnityStandardAssets._2D
                 if (colliders[i].gameObject != gameObject)
                 {
                     m_Grounded = true;
-                    Debug.Log("trueeee");
                 }
             }
             m_Anim.SetBool("test", m_Grounded);
@@ -153,8 +159,7 @@ namespace UnityStandardAssets._2D
                 
                 // Add a vertical force to the player.
                 m_Grounded = false;
-                m_Anim.SetBool("Ground", false);
-                Debug.Log("anim ground is false");
+                m_Anim.SetBool("test", false);
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             }
         }

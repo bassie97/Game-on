@@ -1,93 +1,142 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Xml;
-using System.Collections.Generic;
 using System;
 
 public class MentorControllerScript : MonoBehaviour {
 
     [SerializeField]
     private Sprite[] bubbles;
+    [SerializeField]
+    private Sprite[] bubblesInverted;
 
     // Variables
-    private List<List<string>> speeches = new List<List<string>>();
-    private List<string> currectSpeech;
     private Rigidbody2D mentorRigidbody;
-    private SpriteRenderer bubbleSpeech;
+    private SpriteRenderer speechBubble;
+    private Vector2 target;
+    private bool facingRight;
+    private int timerSpeech;
 
     // Use this for initialization
-    void Start () {
-        Load();
-        LoadCurrentLevelSpeech();
+    void Start ()
+    {
         mentorRigidbody = GetComponent<Rigidbody2D>();
-        bubbleSpeech = GetComponentsInChildren<SpriteRenderer>()[1];
+        speechBubble = GetComponentsInChildren<SpriteRenderer>()[1];
+        facingRight = true;
+        SetTimerSpeech();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        
+        if (PositionReached())
+        {
+            GetComponent<Animator>().SetBool("isWalking", false);
+            mentorRigidbody.velocity = new Vector2(0, mentorRigidbody.velocity.y);
+        } 
+        if (SpeechTimedOut())
+        {
+            speechBubble.enabled = false;
+        }
     }
 
-    /// <summary>
-    /// Load every speech for every level
-    /// </summary>
-    private void Load()
+    /* 
+     * Set the timer for the speech bubble to time out.
+     * This is the amount of time that the system has been running plus 10 seconds.
+     */
+    private void SetTimerSpeech()
     {
-        // Load mentor tutorial speech
-        var levelTutorial = new List<string>();
-        levelTutorial.Add("If you are layer one" + Environment.NewLine + " press W to jump. " + Environment.NewLine + "Player two " + Environment.NewLine + "can use the upper arrow to jump");
-        levelTutorial.Add("You can jump on" + Environment.NewLine + " each other to" + Environment.NewLine + " reach higher obstacles");
-        levelTutorial.Add("Press the jump button while" + Environment.NewLine + " standing in front of the ladder" + Environment.NewLine + " to use the ladder");
-        levelTutorial.Add("Player one " + Environment.NewLine + "can use the E button the shoot bubbles. " + Environment.NewLine + "Player two can do this with " + Environment.NewLine + "the right control button");
-        levelTutorial.Add("Well done, " + Environment.NewLine + "you've finished the tutorial");
-        speeches.Add(levelTutorial);
-        // Load mentor level one speech
-        var levelOne = new List<string>();
-        levelOne.Add("Welcome to you first boss fight! Defeat the boss by throwing bubbles at it");
-        speeches.Add(levelOne);
-        // Load mentor level two speech
-        var levelTwo = new List<string>();
-        levelTwo.Add("Welcome to you second boss fight! Defeat the boss by throwing bubbles at it");
-        speeches.Add(levelTwo);
-        // Load mentor level three speech
-        var levelThree = new List<string>();
-        levelThree.Add("Welcome to you third boss fight! Defeat the boss by throwing bubbles at it");
-        speeches.Add(levelThree);
-        // Load mentor level four speech
-        var levelFour = new List<string>();
-        levelFour.Add("Welcome to you fourth boss fight! Defeat the boss by throwing bubbles at it");
-        speeches.Add(levelFour);
-        // Load mentor other speeches
-        var others = new List<string>();
-        others.Add("Not enough ammo, go back to collect more.");
-        speeches.Add(others);
+        timerSpeech = Environment.TickCount + 10000;
     }
 
-
-    /// <summary>
-    /// Select the current speech list depending on the level
-    /// </summary>
-    private void LoadCurrentLevelSpeech()
-    {
-        int level = 0;
-        currectSpeech = speeches[level];
-    }
-
+   /* 
+    * Method that is called when the mentor reaches a trigger point. 
+    * The following happens in this method:
+    * 1. The target that the mentor has to walk to is set.
+    * 2. The mentor walks to this target.
+    * 3. The speech bubble is set and displayed.
+    * (Note: Callled from MentorTriggerScript.cs)
+    */
     public void Act(Vector2 position, int index)
     {
-        GoTo(position);
+        target = position;
+        Walk();
         Speak(index);        
     }
 
-    private void GoTo(Vector2 position)
+  /* 
+   * Method that is called from the act method. This method causes the mentor to walk 
+   * The following happens in this method:
+   * 1. The isWalking boolean in the animator component is set to true.
+   * 2. The target position is checked and the mentor is flipped if he needs to be.
+   */
+    private void Walk()
     {
-        mentorRigidbody.position = Vector2.MoveTowards(mentorRigidbody.position, position, 20);
-        
+        GetComponent<Animator>().SetBool("isWalking", true);
+
+        if (target.x > mentorRigidbody.position.x)
+        {
+            if (!facingRight) Flip();
+            mentorRigidbody.velocity = new Vector2(2, mentorRigidbody.velocity.y);
+        } else if (target.x < mentorRigidbody.position.x)
+        {
+            if (facingRight) Flip();
+            mentorRigidbody.velocity = new Vector2(-2, mentorRigidbody.velocity.y);
+        }
     }
 
+  /* 
+   * Method that is called from the Update() method.
+   * This method checks if the target position is reached.
+   */
+    private bool PositionReached()
+    {
+        if (target == null) return false;
+        return (Math.Abs(mentorRigidbody.position.x - target.x) <= 1);        
+    }
+
+    /* 
+     * Method for flipping the mentor's animation
+     */
+    private void Flip()
+    {
+        Vector3 scale = transform.localScale;
+        facingRight = !facingRight;
+        scale.x *= -1;
+        transform.localScale = scale;
+    }
+
+    /* 
+     * Method that makes the metor speaks. 
+     * Checks if the speech bubble has to be flipped and does so if this is the case.
+     */
     private void Speak(int index)
     {
-        bubbleSpeech.sprite = bubbles[index];
-        Debug.Log("Index: " + index);
+        
+        Transform transformers = GetComponentInChildren<Transform>();
+        foreach (Transform transformer in transformers)
+        {
+            if (transformer.gameObject != this.gameObject)
+            {
+                if (facingRight && transformer.localScale.x > 0 || !facingRight && transformer.localScale.x < 0)
+                    break;
+                Vector3 scale = transformer.localScale;
+                scale.x *= -1;
+                transformer.localScale = scale;
+            }
+        }
+
+        if (facingRight)
+            speechBubble.sprite = bubbles[index];
+        else
+            speechBubble.sprite = bubblesInverted[index];
+        speechBubble.enabled = true;
+        SetTimerSpeech();
+    }
+
+    /* 
+     * Method that is called from the Update() method.
+     * This methos checks if the speech's time out timer is reached. (Yeah, this's proper English) 
+     */
+    private bool SpeechTimedOut()
+    {
+        return (Environment.TickCount == timerSpeech);
     }
 }
