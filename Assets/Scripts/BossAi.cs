@@ -27,7 +27,7 @@ public class BossAi : MonoBehaviour
     public Path path;
 
     //Ai speed
-    public float speed = 300f;
+    public float speed = 150f;
     public ForceMode2D fMode;
 
     //Obstacles info
@@ -53,7 +53,6 @@ public class BossAi : MonoBehaviour
         m_Anim.SetBool("Ground", true);
         m_Anim.SetFloat("vSpeed", rb.velocity.y);
         m_Anim.SetFloat("Speed", rb.velocity.y);
-        rb.AddForce(-move * 50);
         StartCoroutine(UpdatePath());
     }
 
@@ -123,9 +122,11 @@ public class BossAi : MonoBehaviour
         }
         Spawn();
         Debug.Log("Enemy velocity: " + rb.velocity);
-        if ((target.transform.position.x > lBorder && (Mathf.Abs(target.transform.position.x) < rBorder && rBorder > lBorder)))
+        // && (Mathf.Abs(target.transform.position.x) < rBorder && rBorder > lBorder)))
+        GameObject temp = GameObject.FindWithTag("Door");
+        if (((target.transform.position.x + 4.42) > temp.transform.position.x))
         {
-            
+            Debug.Log("Start the chase?");
             if (rb.velocity.x < 0f && !m_FacingRight)
             {
                 Flip();
@@ -158,18 +159,6 @@ public class BossAi : MonoBehaviour
             {
                 currentWayPoint++;
                 return;
-            }
-        }
-        else
-        {
-            if (m_FacingRight && Mathf.Abs(transform.InverseTransformDirection(rb.velocity).x) < 5f)
-            {
-                Debug.Log(!hit && m_FacingRight);
-                rb.AddForce(-move * 1f);
-            }
-            if (!m_FacingRight && Mathf.Abs(transform.InverseTransformDirection(rb.velocity).x) < 5f)
-            {
-                rb.AddForce(move * 1f);
             }
         }
     }
