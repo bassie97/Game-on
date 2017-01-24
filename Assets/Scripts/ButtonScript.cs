@@ -23,9 +23,21 @@ public class ButtonScript : MonoBehaviour {
 
     private void OnCLickButton()
     {
+        int singleplayer;
+        if (PlayerPrefs.GetInt("Singleplayer" + PlayerID) == 1)
+        {
+            singleplayer = 1;
+            GameController.Instance.AmountOfPlayers = 1;
+        }
+        else{
+                singleplayer = 0;
+                GameController.Instance.AmountOfPlayers = 2;
+            }
         PlayerProgressHolder.Instance.playerID = PlayerID;
         PlayerProgressHolder.Instance.playerName = PlayerPrefs.GetString("PlayerName" + PlayerID); 
         PlayerProgressHolder.Instance.levelProgress = PlayerPrefs.GetInt("LevelProgress" + PlayerID);
+        PlayerProgressHolder.Instance.singleplayer = singleplayer;
+        GameController.Instance.NickName = PlayerProgressHolder.Instance.playerName;
     }
 
     public void Clicked()
