@@ -40,15 +40,24 @@ public class PlayerProgressHolder : MonoBehaviour {
         scene = SceneManager.GetActiveScene();
         if (scene.name == "LevelTwo")
         {
-            levelProgress = 2;
-            Debug.Log(scene.name);
-            save.saveAllInformation(playerID,levelProgress);
+            save.saveAllInformation(playerID,2);
         }else if (scene.name == "SceneTutorial")
         {
-            levelProgress = 10;
-            Debug.Log(scene.name);
-            save.saveAllInformation(playerID, levelProgress);
+            save.saveAllInformation(playerID, 10);
         }
+        else if (scene.name == "LevelOne")
+        {
+            save.saveAllInformation(playerID, 1);
+        }
+        else if (scene.name == "LevelThree")
+        {
+            save.saveAllInformation(playerID, 3);
+        }
+        else if (scene.name == "LevelFour")
+        {
+            save.saveAllInformation(playerID, 4);
+        }
+
         if (playerName != "")
         {
             ProgressLoaded = true;

@@ -29,10 +29,11 @@ namespace UnityStandardAssets._2D
             //UserControl2 = GameObject.FindGameObjectWithTag("Player1").GetComponent<Platformer2DUserControl>();
 
             UserControl2 = GameObject.FindGameObjectWithTag("Player1").GetComponent<PlatformerControl2>();
-
+            Debug.Log("hallo");
             if (GameController.Instance.NickName != null)
             {
                 NickName.text = GameController.Instance.NickName;
+
             }
             else
             {

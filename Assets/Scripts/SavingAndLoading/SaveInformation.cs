@@ -5,8 +5,11 @@ public class SaveInformation : MonoBehaviour
 {
     private int i = 0;
     public void saveAllInformation(int playerID, int levelProgress)
-    {        
-        PlayerPrefs.SetInt("LevelProgress"+playerID, levelProgress);
+    {
+        if (PlayerPrefs.GetInt("LevelProgress" + playerID) > levelProgress == false) {
+            PlayerPrefs.SetInt("LevelProgress" + playerID, levelProgress);
+            PlayerProgressHolder.Instance.levelProgress = levelProgress;
+        }
     }
 
     public void newPlayer(string playerName, int singleplayer)
