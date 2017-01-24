@@ -24,7 +24,16 @@ public class SaveInformation : MonoBehaviour
             PlayerProgressHolder.Instance.playerID = id;
             PlayerProgressHolder.Instance.playerName = PlayerPrefs.GetString("PlayerName" + id);
             PlayerProgressHolder.Instance.levelProgress = PlayerPrefs.GetInt("LevelProgress" + id);
-
+            GameController.Instance.NickName = PlayerProgressHolder.Instance.playerName;
+            
+            if (PlayerPrefs.GetInt("Singleplayer" + id) == 1)
+            {
+                GameController.Instance.AmountOfPlayers = 1;
+            }
+            else
+            {
+                GameController.Instance.AmountOfPlayers = 2;
+            }
         }
     }
 
