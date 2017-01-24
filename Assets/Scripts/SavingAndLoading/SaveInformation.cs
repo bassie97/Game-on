@@ -14,12 +14,17 @@ public class SaveInformation : MonoBehaviour
         int id = NewPlayerID(i);
         Debug.Log("id: "+id);
         if (PlayerPrefs.HasKey("PlayerID" + id) == false) {
-
+            //playerPrefs instellen
             PlayerPrefs.SetInt("PlayerID" + id, id);
             PlayerPrefs.SetInt("LevelProgress" + id, 0);
             PlayerPrefs.SetString("PlayerName" + id, playerName);
             PlayerPrefs.SetInt("Singleplayer" + id, singleplayer);
             //PlayerPrefs.SetInt("HighscoreLevel1PlayerID" + id, highscoreLevel1PlayerID);
+            //PlayerProgressHolder inladen
+            PlayerProgressHolder.Instance.playerID = id;
+            PlayerProgressHolder.Instance.playerName = PlayerPrefs.GetString("PlayerName" + id);
+            PlayerProgressHolder.Instance.levelProgress = PlayerPrefs.GetInt("LevelProgress" + id);
+
         }
     }
 

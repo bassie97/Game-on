@@ -1,13 +1,11 @@
 fileFormatVersion: 2
-guid: 6712e64759569cb44ac5c8e34bcbe70c
-timeCreated: 1485025536
+guid: f0025406a59adab47868893328097202
+timeCreated: 1485253186
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: charakter-idle_boy_0
-    21300002: charakter-idle_boy_1
-    21300004: charakter-idle_boy_2
-    21300006: charakter-idle_boy_3
+    21300000: charakter-jump 1_0
+    21300002: charakter-jump 1_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -57,52 +55,26 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: charakter-idle_boy_0
+      name: charakter-jump 1_0
       rect:
         serializedVersion: 2
-        x: 134
-        y: 191
-        width: 105
-        height: 234
+        x: 107
+        y: 185
+        width: 214
+        height: 304
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: charakter-idle_boy_1
+      name: charakter-jump 1_1
       rect:
         serializedVersion: 2
-        x: 298
-        y: 191
-        width: 104
-        height: 237
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: charakter-idle_boy_2
-      rect:
-        serializedVersion: 2
-        x: 473
-        y: 192
-        width: 103
-        height: 232
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: charakter-idle_boy_3
-      rect:
-        serializedVersion: 2
-        x: 634
-        y: 192
-        width: 104
-        height: 235
+        x: 523
+        y: 171
+        width: 226
+        height: 347
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

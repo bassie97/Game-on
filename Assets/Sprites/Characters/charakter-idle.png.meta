@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 5bc50f488eab50248bbaf96cde3676f8
-timeCreated: 1484687945
+guid: a82b8dec969706b40a5d79e1cc91f0a4
+timeCreated: 1485251698
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -60,10 +60,10 @@ TextureImporter:
       name: charakter-idle_0
       rect:
         serializedVersion: 2
-        x: 12
-        y: 194
-        width: 183
-        height: 253
+        x: 218
+        y: 146
+        width: 226
+        height: 311
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -73,10 +73,10 @@ TextureImporter:
       name: charakter-idle_1
       rect:
         serializedVersion: 2
-        x: 230
-        y: 194
-        width: 187
-        height: 253
+        x: 488
+        y: 146
+        width: 231
+        height: 311
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -86,10 +86,10 @@ TextureImporter:
       name: charakter-idle_2
       rect:
         serializedVersion: 2
-        x: 438
-        y: 193
-        width: 184
-        height: 252
+        x: 784
+        y: 150
+        width: 226
+        height: 312
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -99,10 +99,10 @@ TextureImporter:
       name: charakter-idle_3
       rect:
         serializedVersion: 2
-        x: 635
-        y: 193
-        width: 185
-        height: 252
+        x: 1027
+        y: 150
+        width: 229
+        height: 312
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
