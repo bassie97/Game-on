@@ -66,5 +66,11 @@ public class SaveInformation : MonoBehaviour
         }
         return 0;
     }
+
+    public void SetGender(int gender)
+    {
+        int i = PlayerProgressHolder.Instance.playerID;
+        PlayerPrefs.SetInt("Gender" + i, gender);        
+    }
 }
 
