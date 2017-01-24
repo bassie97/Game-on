@@ -1,14 +1,13 @@
 fileFormatVersion: 2
-guid: f1f7cc16fc614194391a8bb3f7f9fca4
-timeCreated: 1485253561
+guid: 9bf636333a7e749429d67236429de399
+timeCreated: 1485254396
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: charakter-run_0
-    21300002: charakter-run_1
-    21300004: charakter-run_2
-    21300006: charakter-run_3
-    21300008: charakter-run_4
+    21300000: charakter-idle_boy 1_0
+    21300002: charakter-idle_boy 1_1
+    21300004: charakter-idle_boy 1_2
+    21300006: charakter-idle_boy 1_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -58,65 +57,52 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: charakter-run_0
+      name: charakter-idle_boy 1_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 184
-        width: 218
-        height: 319
+        x: 76
+        y: 191
+        width: 124
+        height: 279
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: charakter-run_1
+      name: charakter-idle_boy 1_1
       rect:
         serializedVersion: 2
-        x: 288
-        y: 184
-        width: 217
-        height: 294
+        x: 271
+        y: 191
+        width: 124
+        height: 282
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: charakter-run_2
+      name: charakter-idle_boy 1_2
       rect:
         serializedVersion: 2
-        x: 568
-        y: 184
-        width: 217
-        height: 297
+        x: 479
+        y: 191
+        width: 122
+        height: 276
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: charakter-run_3
+      name: charakter-idle_boy 1_3
       rect:
         serializedVersion: 2
-        x: 869
-        y: 181
-        width: 217
-        height: 293
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: charakter-run_4
-      rect:
-        serializedVersion: 2
-        x: 1196
-        y: 182
-        width: 218
-        height: 320
+        x: 671
+        y: 193
+        width: 124
+        height: 279
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

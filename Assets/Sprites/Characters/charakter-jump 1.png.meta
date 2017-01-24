@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: a439852f32f174449af818580896d49c
-timeCreated: 1484687976
+guid: f0025406a59adab47868893328097202
+timeCreated: 1485253186
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: charakter-jump_0
-    21300002: charakter-jump_1
+    21300000: charakter-jump 1_0
+    21300002: charakter-jump 1_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -55,26 +55,26 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: charakter-jump_0
+      name: charakter-jump 1_0
       rect:
         serializedVersion: 2
-        x: 90
-        y: 169
-        width: 207
-        height: 295
+        x: 107
+        y: 185
+        width: 214
+        height: 304
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: charakter-jump_1
+      name: charakter-jump 1_1
       rect:
         serializedVersion: 2
-        x: 493
-        y: 156
-        width: 219
-        height: 336
+        x: 523
+        y: 171
+        width: 226
+        height: 347
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
