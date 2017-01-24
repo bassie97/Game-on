@@ -13,7 +13,8 @@ public class SaveInformation : MonoBehaviour
     {
         int id = NewPlayerID(i);
         Debug.Log("id: "+id);
-        if (PlayerPrefs.HasKey("PlayerID" + id) == false) {
+        if (PlayerPrefs.HasKey("PlayerID" + id) == false)
+        {
             //playerPrefs instellen
             PlayerPrefs.SetInt("PlayerID" + id, id);
             PlayerPrefs.SetInt("LevelProgress" + id, 0);
@@ -25,7 +26,7 @@ public class SaveInformation : MonoBehaviour
             PlayerProgressHolder.Instance.playerName = PlayerPrefs.GetString("PlayerName" + id);
             PlayerProgressHolder.Instance.levelProgress = PlayerPrefs.GetInt("LevelProgress" + id);
             GameController.Instance.NickName = PlayerProgressHolder.Instance.playerName;
-            
+
             if (PlayerPrefs.GetInt("Singleplayer" + id) == 1)
             {
                 GameController.Instance.AmountOfPlayers = 1;
@@ -35,6 +36,7 @@ public class SaveInformation : MonoBehaviour
                 GameController.Instance.AmountOfPlayers = 2;
             }
         }
+        else { Debug.Log("Er zijn al 9 profielen."); }
     }
 
     void Awake()
@@ -47,7 +49,7 @@ public class SaveInformation : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    static int NewPlayerID(int i)
+    private static int NewPlayerID(int i)
     {
         int j;
         for (j=0; PlayerPrefs.HasKey("PlayerID" + j) == true; j++)
@@ -55,7 +57,11 @@ public class SaveInformation : MonoBehaviour
             //nothing
         }
         Debug.Log(j);
-        return j;
+        if (j <= 8)
+        {
+            return j;
+        }
+        return 0;
     }
 }
 

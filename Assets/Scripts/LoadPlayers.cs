@@ -60,31 +60,37 @@ public class LoadPlayers : MonoBehaviour {
         counter++;
         if (PlayerPrefs.HasKey("PlayerID" + counter))
         {
-            GameObject prefab = (GameObject)Instantiate(prefab4, new Vector3(-400, -200, 0), Quaternion.identity);
+            GameObject prefab = (GameObject)Instantiate(prefab4, new Vector3(0, 250, 0), Quaternion.identity);
             prefab.transform.SetParent(canvas.transform, false);
         }
         counter++;
         if (PlayerPrefs.HasKey("PlayerID" + counter))
         {
-            GameObject prefab = (GameObject)Instantiate(prefab5, new Vector3(0, 250, 0), Quaternion.identity);
+            GameObject prefab = (GameObject)Instantiate(prefab5, new Vector3(0, 100, 0), Quaternion.identity);
             prefab.transform.SetParent(canvas.transform, false);
         }
         counter++;
         if (PlayerPrefs.HasKey("PlayerID" + counter))
         {
-            GameObject prefab = (GameObject)Instantiate(prefab6, new Vector3(0, 100, 0), Quaternion.identity);
+            GameObject prefab = (GameObject)Instantiate(prefab6, new Vector3(0, -50, 0), Quaternion.identity);
             prefab.transform.SetParent(canvas.transform, false);
         }
         counter++;
         if (PlayerPrefs.HasKey("PlayerID" + counter))
         {
-            GameObject prefab = (GameObject)Instantiate(prefab7, new Vector3(0, -50, 0), Quaternion.identity);
+            GameObject prefab = (GameObject)Instantiate(prefab7, new Vector3(400, 250, 0), Quaternion.identity);
             prefab.transform.SetParent(canvas.transform, false);
         }
         counter++;
         if (PlayerPrefs.HasKey("PlayerID" + counter))
         {
-            GameObject prefab = (GameObject)Instantiate(prefab8, new Vector3(0, -200, 0), Quaternion.identity);
+            GameObject prefab = (GameObject)Instantiate(prefab8, new Vector3(400, 100, 0), Quaternion.identity);
+            prefab.transform.SetParent(canvas.transform, false);
+        }
+        counter++;
+        if (PlayerPrefs.HasKey("PlayerID" + counter))
+        {
+            GameObject prefab = (GameObject)Instantiate(prefab8, new Vector3(400, -50, 0), Quaternion.identity);
             prefab.transform.SetParent(canvas.transform, false);
         }
     }
@@ -93,5 +99,10 @@ public class LoadPlayers : MonoBehaviour {
     public void ChangeToScene(int sceneToChangeTo)
     {
         SceneManager.LoadScene(sceneToChangeTo);
+    }
+
+    public void DeleteAllProfiles()
+    {
+        PlayerPrefs.DeleteAll();
     }
 }
