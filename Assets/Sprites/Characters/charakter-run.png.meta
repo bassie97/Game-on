@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 0e2275bc76c70974d9ba9fd60cf7fb85
-timeCreated: 1484688006
+guid: f1f7cc16fc614194391a8bb3f7f9fca4
+timeCreated: 1485253561
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -61,10 +61,10 @@ TextureImporter:
       name: charakter-run_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 333
-        width: 166
-        height: 243
+        x: 8
+        y: 184
+        width: 218
+        height: 319
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -74,10 +74,10 @@ TextureImporter:
       name: charakter-run_1
       rect:
         serializedVersion: 2
-        x: 219
-        y: 333
-        width: 165
-        height: 224
+        x: 288
+        y: 184
+        width: 217
+        height: 294
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -87,10 +87,10 @@ TextureImporter:
       name: charakter-run_2
       rect:
         serializedVersion: 2
-        x: 400
-        y: 333
-        width: 165
-        height: 226
+        x: 568
+        y: 184
+        width: 217
+        height: 297
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -100,10 +100,10 @@ TextureImporter:
       name: charakter-run_3
       rect:
         serializedVersion: 2
-        x: 401
-        y: 55
-        width: 165
-        height: 223
+        x: 869
+        y: 181
+        width: 217
+        height: 293
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -113,10 +113,10 @@ TextureImporter:
       name: charakter-run_4
       rect:
         serializedVersion: 2
-        x: 615
-        y: 55
-        width: 166
-        height: 243
+        x: 1196
+        y: 182
+        width: 218
+        height: 320
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
