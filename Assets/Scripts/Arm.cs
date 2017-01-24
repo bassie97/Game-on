@@ -27,10 +27,12 @@ public class Arm : MonoBehaviour {
 		}
 	}
 	private void throwAmmo(){
+        /*
 		GameObject firePointClone;
 		firePointClone = (GameObject) Instantiate(BulletTrailPrefab, firePoint.position, firePoint.rotation);
 		firePointClone.transform.SetParent(BulletTrailPrefab.transform);
 		firePointClone.GetComponent<Rigidbody2D>().velocity = firePoint.right * throwSpeed;
+        */
 	
 	}
 
