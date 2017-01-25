@@ -25,6 +25,10 @@ public class LevelController : MonoBehaviour {
 
     private GameObject prefab;
 
+    public float delay = 0;
+    public float repeatTime;
+    public int scoreIncrease;
+
     [SerializeField]
     private Camera cam;
 
@@ -40,6 +44,12 @@ public class LevelController : MonoBehaviour {
         //notice gamecontroller that the level has started.
         GameController.Instance.playerPassedEvent(1);
         Debug.Log("two plaeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeyers");
+        InvokeRepeating("IncreaseScore", delay, repeatTime);
+    }
+
+    void IncreaseScore()
+    {
+        GameController.Instance.IncreaseScore(scoreIncrease);
     }
 	
 	// Update is called once per frame
