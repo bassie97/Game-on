@@ -13,6 +13,8 @@ public class GameController : MonoBehaviour {
     public int AmountOfPlayers;
     public string NickName;
 
+    private int score;
+
     private int Char1Model = 0;
     private int Char2Model = 0;
 
@@ -82,6 +84,24 @@ public class GameController : MonoBehaviour {
                 Debug.LogError("Model " + Char2Model + " does not exist");
             }
         }
+    }
+
+    public int Score
+    {
+        get
+        {
+            return score;
+        }
+
+        set
+        {
+            score = value;
+        }
+    }
+
+    public void IncreaseScore(int addition)
+    {
+        this.score += addition;
     }
 
     public void subscribeScriptToGameEventUpdates(MonoBehaviour pScript)

@@ -2,6 +2,7 @@
 using System.Collections;
 using Pathfinding;
 using System;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Seeker))]
@@ -84,6 +85,7 @@ public class BossAi : MonoBehaviour
             if (health <= 0)
             {
                 Destroy(this.gameObject);
+                ChangeToScene(9);
             }
         }
         if (other.CompareTag("Obstacle"))
@@ -109,6 +111,12 @@ public class BossAi : MonoBehaviour
             currentWayPoint = 0;
         }
     }
+
+    public void ChangeToScene(int sceneToChangeTo)
+    {
+        SceneManager.LoadScene(sceneToChangeTo);
+    }
+
     void Update()
     {
         m_Anim.SetFloat("vSpeed", rb.velocity.y);

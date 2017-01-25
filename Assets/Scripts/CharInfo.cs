@@ -23,6 +23,9 @@ namespace UnityStandardAssets._2D
         [SerializeField]
         private Text ammoCount2 = null;
 
+        [SerializeField]
+        private Text score = null;
+
         // Use this for initialization
         void Start() {
             UserControl1 = GameObject.FindGameObjectWithTag("Player").GetComponent<Platformer2DUserControl>();
@@ -47,8 +50,13 @@ namespace UnityStandardAssets._2D
         void Update() {
             CheckAmmoCount();
             CheckCharHealth();
+            UpdateScore();
         }
 
+        private void UpdateScore()
+        {
+            score.text = GameController.Instance.Score.ToString();
+        }
         private void CheckCharHealth()
         {
             if(GameController.Instance.AmountOfPlayers == 1)
