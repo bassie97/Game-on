@@ -17,6 +17,7 @@ namespace UnityStandardAssets._2D {
         private BoxCollider2D door;
         private bool locked = false;
         private bool[] playerInside;
+        private int id = 8;
 
         // Use this for initialization
         void Start()
@@ -47,7 +48,7 @@ namespace UnityStandardAssets._2D {
                 } else
                 {
                     door.isTrigger = false;
-                    Debug.Log("Not enough ammo");
+                    GameObject.FindObjectOfType<MentorControllerScript>().Act(transform.position, id);
                 }
             }
         }
