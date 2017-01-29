@@ -31,7 +31,7 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
-*.video/
+*.Video/
 
 */StyleCop.Cache
 #MightyFalls/Library/shadercompiler-UnityShaderCompiler.exe0.log
