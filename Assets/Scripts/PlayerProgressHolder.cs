@@ -67,7 +67,7 @@ public class PlayerProgressHolder : MonoBehaviour {
     {
         if (FindObjectsOfType<PlayerProgressHolder>().Length > 1)
         {
-            Debug.LogError("There is more than one game controller in the scene");
+            Debug.LogError("There is more than one player progress holder in the scene");
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
