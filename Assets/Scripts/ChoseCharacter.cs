@@ -33,6 +33,7 @@ public class ChoseCharacter : MonoBehaviour {
 
     public void NickName(string name)
     {
+        Debug.Log("name is set to:" + name);
         GameController.Instance.NickName = name;
     }
 
@@ -46,8 +47,6 @@ public class ChoseCharacter : MonoBehaviour {
         else { singleplayer = 0; }
         if (GameController.Instance.NickName != null)
         {
-            
-            Debug.Log("hoe dna");
             PlayerProgressHolder.Instance.save.newPlayer(GameController.Instance.NickName, singleplayer);
         }
         else { Debug.Log("Please fill in nickname"); changeToScene(3); }

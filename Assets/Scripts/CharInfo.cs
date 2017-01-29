@@ -29,15 +29,19 @@ namespace UnityStandardAssets._2D
         // Use this for initialization
         void Start() {
             UserControl1 = GameObject.FindGameObjectWithTag("Player").GetComponent<Platformer2DUserControl>();
-            //UserControl2 = GameObject.FindGameObjectWithTag("Player1").GetComponent<Platformer2DUserControl>();
 
-            UserControl2 = GameObject.FindGameObjectWithTag("Player1").GetComponent<PlatformerControl2>();
+             if(GameObject.FindGameObjectWithTag("Player1") != null)
+            {
+                UserControl2 = GameObject.FindGameObjectWithTag("Player1").GetComponent<PlatformerControl2>();
+            }
             if (GameController.Instance.NickName != null)
             {
+                Debug.LogError("name is set to: " + GameController.Instance.NickName);
                 NickName.text = GameController.Instance.NickName;
             }
             else
             {
+                Debug.LogError("no name: " + GameController.Instance.NickName);
                 NickName.text = "No name found";
             }
 
