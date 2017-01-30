@@ -9,10 +9,14 @@ public class EndGameScript : MonoBehaviour {
     [SerializeField]
     private Text score;
 
+    [SerializeField]
+    private Text pickUps;
+
     // Use this for initialization
     void Start()
     {
-        //score.text = GameController.Instance.Score.ToString();
+        score.text = GameController.Instance.Score.ToString();
+        pickUps.text = GameController.Instance.ScoreTotal.ToString();
     }
 
     // Update is called once per frame

@@ -77,6 +77,7 @@ namespace UnityStandardAssets._2D
         private void OnTriggerEnter2D(Collider2D other){
 			if(other.CompareTag("PickUp")){
                 ammoCount = ammoCount + 1;
+                GameController.Instance.IncreasePickUps();
 				Destroy (other.gameObject);
 			}
             if (!invincible)
@@ -178,6 +179,7 @@ namespace UnityStandardAssets._2D
         }
     void Die()
         {
+            GameController.Instance.ResetPickUps();
             Application.LoadLevel(Application.loadedLevel);
         }
     void resetInvulnerability()

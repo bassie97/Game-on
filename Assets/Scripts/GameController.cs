@@ -14,6 +14,9 @@ public class GameController : MonoBehaviour {
     public string NickName;
 
     private int score;
+    private int pickUps;
+    private int[] pickUpsInLevels = new int [2];
+    private int scoreTotal;
 
     private int Char1Model = 0;
     private int Char2Model = 0;
@@ -104,6 +107,45 @@ public class GameController : MonoBehaviour {
         this.score += addition;
     }
 
+    public int PickUps
+    {
+        get
+        {
+            return pickUps;
+        }
+    }
+
+    public void IncreasePickUps()
+    {
+        pickUps++;
+    }
+
+    public void ResetPickUps()
+    {
+        pickUps = 0;
+    }
+
+    public int[] PickUpsInLevels
+    {
+        get
+        {
+            return pickUpsInLevels;
+        }
+    }
+
+    public int ScoreTotal
+    {
+        get
+        {
+            return scoreTotal;
+        }
+
+        set
+        {
+            scoreTotal = value;
+        }
+    }
+
     public void subscribeScriptToGameEventUpdates(MonoBehaviour pScript)
     {
         Debug.Log("Added: " + pScript);
@@ -133,6 +175,7 @@ public class GameController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        pickUpsInLevels[0] = 4; pickUpsInLevels[1] = 6;
         DontDestroyOnLoad( gameObject);
     }
 }
