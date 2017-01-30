@@ -31,4 +31,9 @@ public class GenderSelection : MonoBehaviour {
     {
         SceneManager.LoadScene(sceneToChangeTo);
     }
+
+    public void Gender()
+    {
+        PlayerProgressHolder.Instance.save.SetGender(GameController.Instance.Char1Model1, GameController.Instance.Char2Model1);
+    }
 }

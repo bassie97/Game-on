@@ -14,6 +14,8 @@ public class PlayerProgressHolder : MonoBehaviour {
     public int levelProgress;
     public string playerName;
     public int singleplayer;
+    public int gender1;
+    public int gender2;
 
     private static PlayerProgressHolder instance;
 
@@ -43,7 +45,7 @@ public class PlayerProgressHolder : MonoBehaviour {
             save.saveAllInformation(playerID,2);
         }else if (scene.name == "SceneTutorial")
         {
-            save.saveAllInformation(playerID, 10);
+            save.saveAllInformation(playerID, 0);
         }
         else if (scene.name == "LevelOne")
         {

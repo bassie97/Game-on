@@ -37,6 +37,8 @@ public class ButtonScript : MonoBehaviour {
         PlayerProgressHolder.Instance.playerName = PlayerPrefs.GetString("PlayerName" + PlayerID); 
         PlayerProgressHolder.Instance.levelProgress = PlayerPrefs.GetInt("LevelProgress" + PlayerID);
         PlayerProgressHolder.Instance.singleplayer = singleplayer;
+        PlayerProgressHolder.Instance.gender1 = PlayerPrefs.GetInt("GenderOnePlayer" + PlayerID);
+        PlayerProgressHolder.Instance.gender2 = PlayerPrefs.GetInt("GenderTwoPlayer" + PlayerID);
         GameController.Instance.NickName = PlayerProgressHolder.Instance.playerName;
     }
 
