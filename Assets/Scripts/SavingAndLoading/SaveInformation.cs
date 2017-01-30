@@ -29,6 +29,7 @@ public class SaveInformation : MonoBehaviour
             PlayerProgressHolder.Instance.playerName = PlayerPrefs.GetString("PlayerName" + id);
             PlayerProgressHolder.Instance.levelProgress = PlayerPrefs.GetInt("LevelProgress" + id);
             GameController.Instance.NickName = PlayerProgressHolder.Instance.playerName;
+            
 
             if (PlayerPrefs.GetInt("Singleplayer" + id) == 1)
             {
@@ -67,10 +68,11 @@ public class SaveInformation : MonoBehaviour
         return 0;
     }
 
-    public void SetGender(int gender)
+    public void SetGender(int gender1, int gender2)
     {
         int i = PlayerProgressHolder.Instance.playerID;
-        PlayerPrefs.SetInt("Gender" + i, gender);        
+        PlayerPrefs.SetInt("GenderOnePlayer" + i, gender1);
+        PlayerPrefs.SetInt("GenderTwoPlayer" + i, gender2);
     }
 }
 
