@@ -43,6 +43,7 @@ public class ChoseCharacter : MonoBehaviour {
         if (GameController.Instance.AmountOfPlayers == 1)
         {
             singleplayer = 1;
+            Debug.Log("1");
         }
         else { singleplayer = 0; }
         if (GameController.Instance.NickName != null)
