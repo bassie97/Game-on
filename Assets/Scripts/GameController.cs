@@ -178,4 +178,11 @@ public class GameController : MonoBehaviour {
         pickUpsInLevels[0] = 4; pickUpsInLevels[1] = 6;
         DontDestroyOnLoad( gameObject);
     }
+
+    public void toggleMusic(bool toggle )
+    {
+        Debug.Log("test" + toggle);
+        if (toggle) AudioListener.volume = 1;
+        if (!toggle) AudioListener.volume = 0;
+    }
 }
