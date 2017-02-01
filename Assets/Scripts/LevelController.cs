@@ -70,16 +70,16 @@ public class LevelController : MonoBehaviour {
 
             //Initialize HUD
             GameObject parent = GameObject.FindGameObjectWithTag("ChooseCharacter");
-            if (GameController.Instance.AmountOfPlayers == 1)
+            if (PlayerProgressHolder.Instance.singleplayer == 1)
             {
                 Debug.Log("one player");
 
-                if(GameController.Instance.Char1Model1 == 0)
+                if(PlayerProgressHolder.Instance.gender1 == 0)
                 {
                     Debug.Log("one player girl instantiated");
                     prefab = (GameObject)Instantiate(Player0Girl, new Vector3(-19, -2, 0), Quaternion.identity);
                 }
-                if(GameController.Instance.Char1Model1 == 1)
+                if(PlayerProgressHolder.Instance.gender1 == 1)
                 {
                     Debug.Log("one player boy instantiated");
                     prefab = (GameObject)Instantiate(Player0Boy, new Vector3(-19, -2, 0), Quaternion.identity);
@@ -91,28 +91,28 @@ public class LevelController : MonoBehaviour {
                 
             }
 
-            if(GameController.Instance.AmountOfPlayers == 2)
+            if(PlayerProgressHolder.Instance.singleplayer == 0)
             {
                 Debug.Log("two players");
 
-                if (GameController.Instance.Char1Model1 == 0)
+                if (PlayerProgressHolder.Instance.gender1 == 0)
                 {
                     Debug.Log("two players girl0 instantiated");
                     prefab = (GameObject)Instantiate(Player0Girl, new Vector3(-19, -2, 0), Quaternion.identity);
                 }
-                if (GameController.Instance.Char1Model1 == 1)
+                if (PlayerProgressHolder.Instance.gender1 == 1)
                 {
                     Debug.Log("two players boy0 instantiated");
                     prefab = (GameObject)Instantiate(Player0Boy, new Vector3(-19, -2, 0), Quaternion.identity);
                 }
                 cam.GetComponent<Camera2DFollow>().target = prefab.transform;
 
-                if (GameController.Instance.Char2Model1 == 0)
+                if (PlayerProgressHolder.Instance.gender2 == 0)
                 {
                     Debug.Log("two players girl1 instantiated");
                     prefab = (GameObject)Instantiate(Player1Girl, new Vector3(-22, -2, 0), Quaternion.identity);
                 }
-                if (GameController.Instance.Char2Model1 == 1)
+                if (PlayerProgressHolder.Instance.gender2 == 1)
                 {
                     Debug.Log("two players boy1 instantiated");
                     prefab = (GameObject)Instantiate(Player1Boy, new Vector3(-22, -2, 0), Quaternion.identity);

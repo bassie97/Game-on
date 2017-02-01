@@ -7,13 +7,15 @@ public class MentorControllerScript : MonoBehaviour {
     private Sprite[] bubbles;
     [SerializeField]
     private Sprite[] bubblesInverted;
-
+    
     // Variables
     private Rigidbody2D mentorRigidbody;
     private SpriteRenderer speechBubble;
     private Vector2 target;
+    private int movementSpeed = 5;
     private bool facingRight;
     private int timerSpeech;
+    private int timerEvent;
 
     // Use this for initialization
     void Start ()
@@ -22,6 +24,7 @@ public class MentorControllerScript : MonoBehaviour {
         speechBubble = GetComponentsInChildren<SpriteRenderer>()[1];
         facingRight = true;
         SetTimerSpeech();
+        SetTimer();
     }
 	
 	// Update is called once per frame
@@ -35,6 +38,7 @@ public class MentorControllerScript : MonoBehaviour {
         {
             speechBubble.enabled = false;
         }
+        TimerEvent();
     }
 
     /* 
@@ -46,14 +50,23 @@ public class MentorControllerScript : MonoBehaviour {
         timerSpeech = Environment.TickCount + 10000;
     }
 
-   /* 
-    * Method that is called when the mentor reaches a trigger point. 
-    * The following happens in this method:
-    * 1. The target that the mentor has to walk to is set.
-    * 2. The mentor walks to this target.
-    * 3. The speech bubble is set and displayed.
-    * (Note: Callled from MentorTriggerScript.cs)
-    */
+    /* 
+     * Set the timer to change the first speech bubble.
+     * This is the amount of time that the system has been running plus 5 seconds.
+     */
+    private void SetTimer()
+    {
+        timerEvent = Environment.TickCount + 5000;
+    }
+
+    /* 
+     * Method that is called when the mentor reaches a trigger point. 
+     * The following happens in this method:
+     * 1. The target that the mentor has to walk to is set.
+     * 2. The mentor walks to this target.
+     * 3. The speech bubble is set and displayed.
+     * (Note: Callled from MentorTriggerScript.cs)
+     */
     public void Act(Vector2 position, int index)
     {
         target = position;
@@ -74,11 +87,11 @@ public class MentorControllerScript : MonoBehaviour {
         if (target.x > mentorRigidbody.position.x)
         {
             if (!facingRight) Flip();
-            mentorRigidbody.velocity = new Vector2(2, mentorRigidbody.velocity.y);
+            mentorRigidbody.velocity = new Vector2(movementSpeed, mentorRigidbody.velocity.y);
         } else if (target.x < mentorRigidbody.position.x)
         {
             if (facingRight) Flip();
-            mentorRigidbody.velocity = new Vector2(-2, mentorRigidbody.velocity.y);
+            mentorRigidbody.velocity = new Vector2(-movementSpeed, mentorRigidbody.velocity.y);
         }
     }
 
@@ -109,7 +122,6 @@ public class MentorControllerScript : MonoBehaviour {
      */
     private void Speak(int index)
     {
-        
         Transform transformers = GetComponentInChildren<Transform>();
         foreach (Transform transformer in transformers)
         {
@@ -138,5 +150,15 @@ public class MentorControllerScript : MonoBehaviour {
     private bool SpeechTimedOut()
     {
         return (Environment.TickCount == timerSpeech);
+    }
+
+
+    /* 
+     * Method that is called from the Update() method.
+     * This methos checks if the timer has to do e special event. 
+     */
+    private void TimerEvent()
+    {
+        if (Environment.TickCount == timerEvent) Speak(0);
     }
 }

@@ -85,7 +85,7 @@ public class BossAi : MonoBehaviour
             if (health <= 0)
             {
                 Destroy(this.gameObject);
-                ChangeToScene(9);
+                ChangeToScene(10);
             }
         }
         if (other.CompareTag("Obstacle"))
