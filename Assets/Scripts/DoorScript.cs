@@ -4,11 +4,6 @@ using System.Collections;
 namespace UnityStandardAssets._2D {
     public class DoorScript : MonoBehaviour
     {
-
-        [SerializeField]
-        Sprite doorSpriteOpen;
-        [SerializeField]
-        Sprite doorSpriteClosed;
         [SerializeField]
         private int minAmmo = 5;
 
@@ -19,10 +14,13 @@ namespace UnityStandardAssets._2D {
         private bool[] playerInside;
         private int id = 8;
 
+        private SpriteRenderer[] sprites;
+
         // Use this for initialization
         void Start()
         {
             door = GameObject.FindGameObjectWithTag("Door").GetComponent<BoxCollider2D>();
+            sprites = GetComponentsInChildren<SpriteRenderer>(true);
             playerInside = new bool[GameController.Instance.AmountOfPlayers];
         }
 
@@ -44,13 +42,35 @@ namespace UnityStandardAssets._2D {
                 m_Character = collision.GetComponent<PlatformerCharacter2D>();
                 if (m_Character.ammoCount >= minAmmo)
                 {
-                    GetComponentsInChildren<SpriteRenderer>()[1].sprite = doorSpriteOpen;
+                    OpenDoor();
                 } else
                 {
                     door.isTrigger = false;
                     GameObject.FindObjectOfType<MentorControllerScript>().Act(transform.position, id);
                 }
             }
+        }
+
+        private void OpenDoor()
+        {
+            foreach (SpriteRenderer sprite in sprites)
+            {
+                if (sprite.tag == "DoorLocked")
+                {
+                    sprite.enabled = false;
+                }
+            }
+        }
+
+        private void CloseDoor()
+        {
+            foreach (SpriteRenderer sprite in sprites)
+            {
+                if (sprite.tag == "DoorLocked")
+                {
+                    sprite.enabled = true;
+                }
+            }  
         }
 
        /* 
@@ -65,7 +85,7 @@ namespace UnityStandardAssets._2D {
 
             if (collision.tag == "Player" || collision.tag == "Player1")
             {
-                GetComponentsInChildren<SpriteRenderer>()[1].sprite = doorSpriteClosed;
+                CloseDoor();
                 door.isTrigger = true;
                 m_Character = collision.GetComponent<PlatformerCharacter2D>();
                 if (AreCharactersInside(m_Character))
