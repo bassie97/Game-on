@@ -59,11 +59,9 @@ public class EnemyAI : MonoBehaviour
         {
             target = GameObject.FindWithTag("Player").transform;
             seeker.StartPath(transform.position, target.position, OnPathComplete);
-            Debug.Log("Enemy location:" + transform.position + "target location:" + target.position);
         }
         catch (NullReferenceException ex)
         {
-            Debug.Log(ex);
         }
         yield return new WaitForSeconds(1f / updateRate);
         StartCoroutine(UpdatePath());
@@ -96,7 +94,6 @@ public class EnemyAI : MonoBehaviour
     }
     public void OnPathComplete(Path p)
     {
-        Debug.Log("We got a path, did it have an error?" + p.error);
         if (!p.error)
         {
             path = p;
@@ -111,7 +108,6 @@ public class EnemyAI : MonoBehaviour
     }
     void FixedUpdate()
     {
-        Debug.Log("Enemy velocity: " + rb.velocity);
         if ((target.transform.position.x > lBorder && (Mathf.Abs(target.transform.position.x) < rBorder && rBorder > lBorder)) || (minnion))
         {
             StartCoroutine(UpdatePath());

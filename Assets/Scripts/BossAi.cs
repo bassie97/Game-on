@@ -131,12 +131,10 @@ public class BossAi : MonoBehaviour
             return;
         }
         Spawn();
-        Debug.Log("Enemy velocity: " + rb.velocity);
         // && (Mathf.Abs(target.transform.position.x) < rBorder && rBorder > lBorder)))
         GameObject temp = GameObject.FindWithTag("Door");
         if (((target.transform.position.x + 4.42/*(Compensation for Door object offset */) > temp.transform.position.x))
         {
-            Debug.Log("Start the chase?");
             if (rb.velocity.x < 0f && !m_FacingRight)
             {
                 Flip();
