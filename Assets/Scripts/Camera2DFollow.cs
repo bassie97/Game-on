@@ -38,6 +38,10 @@ public class Camera2DFollow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (target == null && target1 == null)
+        {
+            FindPlayers();
+        }
         if (target != null || target1 != null)
         {
             // only update lookahead pos if accelerating or changed direction
