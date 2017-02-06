@@ -50,7 +50,7 @@ public class EnemyAI : MonoBehaviour
         m_Anim.SetFloat("vSpeed", rb.velocity.y);
         m_Anim.SetFloat("Speed", rb.velocity.y);
         rb.AddForce(-move * 50);
-        StartCoroutine(UpdatePath());
+        
     }
 
     IEnumerator UpdatePath()
@@ -114,11 +114,8 @@ public class EnemyAI : MonoBehaviour
         Debug.Log("Enemy velocity: " + rb.velocity);
         if ((target.transform.position.x > lBorder && (Mathf.Abs(target.transform.position.x) < rBorder && rBorder > lBorder)) || (minnion))
         {
-            if (rb.velocity.x < 0f && !m_FacingRight)
-            {
-                Flip();
-            }
-            else if (rb.velocity.x > 0f && m_FacingRight)
+            StartCoroutine(UpdatePath());
+            if (rb.velocity.x < 0f && !m_FacingRight || rb.velocity.x > 0f && m_FacingRight)
             {
                 Flip();
             }
@@ -126,8 +123,6 @@ public class EnemyAI : MonoBehaviour
             {
                 if (pathIsEnded)
                     return;
-
-                Debug.Log("End of path reached.");
                 pathIsEnded = true;
                 return;
             }
@@ -136,7 +131,6 @@ public class EnemyAI : MonoBehaviour
 
             //Find direction to next waypoint
             Vector3 dir = (path.vectorPath[currentWayPoint] - transform.position).normalized;
-            Debug.Log("wtf is dir?:" + dir);
             dir *= speed * Time.fixedDeltaTime;
 
             //Move the AI
